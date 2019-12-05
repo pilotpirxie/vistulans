@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     void Start()
     {
-        
+        TextAsset levelConfigContent = Resources.Load<TextAsset>("Config/levels");
+        Debug.Log($"Loaded level configuration: {levelConfigContent}");
+        LevelConfig levelConfig = JsonUtility.FromJson<LevelConfig>(levelConfigContent.text);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
