@@ -1,0 +1,47 @@
+{
+	"levels": [
+		{
+			"title": "Test map",
+			"background": 0,
+			"vertices": [
+				{
+					"id": 0,
+					"type": 0,
+					"x": 0,
+					"y": 0,
+					"level": 0,
+					"owner": 0,
+					"power": 0
+				}, {
+					"id": 1,
+					"type": 0,
+					"x": 0,
+					"y": 0,
+					"level": 0,
+					"owner": 0,
+					"power": 0
+				}, {
+					"id": 2,
+					"type": 0,
+					"x": 0,
+					"y": 0,
+					"level": 0,
+					"owner": 0,
+					"power": 0
+				} 
+			],
+			"connections": [
+				{
+					"a": 0,
+					"b": 0
+				}, {
+					"a": 0,
+					"b": 1
+				}, {
+					"a": 0,
+					"b": 2
+				}
+			]
+		}
+	]
+}

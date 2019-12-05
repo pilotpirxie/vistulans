@@ -1,0 +1,54 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum VertexType
+{
+    Village,
+    Shrine,
+    Apiary
+};
+
+public enum OwnerType
+{
+    Wild,
+    Player,
+    EnemyOne,
+    EnemyTwo,
+    EnemyThree
+};
+
+public class Vertex : MonoBehaviour
+{
+
+    [SerializeField]
+    public VertexType Type;
+
+    [SerializeField]
+    private int X;
+
+    [SerializeField]
+    private int Y;
+
+    [SerializeField]
+    public int Level;
+
+    [SerializeField]
+    public List<GameObject> Connected;
+
+    [SerializeField]
+    public int Power;
+
+    [SerializeField]
+    public OwnerType Owner;
+
+    void Start()
+    {
+        
+    }
+
+    void FixedUpdate()
+    {
+        
+    }
+}
