@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8094815627158821715}
   - component: {fileID: 8094815627158821719}
   m_Layer: 0
-  m_Name: Vertex
+  m_Name: VertexObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,5 +109,5 @@ MonoBehaviour:
   Y: 0
   Level: 0
   Connected: []
-  Warriors: 0
+  Power: 0
   Owner: 0
