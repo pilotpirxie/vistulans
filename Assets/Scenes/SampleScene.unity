@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 846776718}
   m_Layer: 0
   m_Name: LevelController
-  m_TagString: Untagged
+  m_TagString: LevelController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -308,6 +308,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VertexObject: {fileID: 8094815627158821714, guid: 21dc69cf2f54ba84891f37681058ed51,
     type: 3}
+  aId: -1
+  bId: -1
 --- !u!1 &1806313878
 GameObject:
   m_ObjectHideFlags: 0

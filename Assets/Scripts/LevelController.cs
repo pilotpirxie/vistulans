@@ -74,17 +74,8 @@ public class LevelController : MonoBehaviour
                 connectedVertex.GetComponent<Renderer>().material.color = Color.yellow;
             }
         }
-        else
-        {
-            foreach (GameObject vertex in GameObject.FindGameObjectsWithTag("Vertex"))
-            {
-                vertex.GetComponent<Renderer>().material.color = Color.clear;
-            }
 
-        }
-
-
-        if (aId >= 0 && bId >= 0)
+        if (aId != -1 && bId != -1)
         {
             GameObject sourceVertex = GameObject.Find($"vertex{aId}");
 
@@ -95,6 +86,11 @@ public class LevelController : MonoBehaviour
                     // send signal to move units
                     Debug.Log($"Sent unit from {aId} to {bId}");
                 }
+            }
+
+            foreach (GameObject vertex in GameObject.FindGameObjectsWithTag("Vertex"))
+            {
+                vertex.GetComponent<Renderer>().material.color = Color.clear;
             }
 
             aId = -1;
