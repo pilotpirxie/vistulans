@@ -13,6 +13,14 @@ public class Level
     public string title;
     public int background;
     public List<VertexProxy> vertexProxies;
+    public List<Connection> connections;
+}
+
+[Serializable]
+public class Connection
+{
+    public int a;
+    public int b;
 }
 
 [Serializable]

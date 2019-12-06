@@ -22,6 +22,9 @@ public class Vertex : MonoBehaviour
 {
 
     [SerializeField]
+    public int Id;
+
+    [SerializeField]
     public VertexType Type;
 
     [SerializeField]
@@ -34,7 +37,7 @@ public class Vertex : MonoBehaviour
     public int Level;
 
     [SerializeField]
-    public List<GameObject> Connected;
+    public List<GameObject> Connections;
 
     [SerializeField]
     public int Power;

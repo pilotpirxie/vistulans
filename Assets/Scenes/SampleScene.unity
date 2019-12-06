@@ -272,6 +272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 846776717}
+  - component: {fileID: 846776718}
   m_Layer: 0
   m_Name: LevelController
   m_TagString: Untagged
@@ -293,6 +294,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &846776718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846776716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a188bd9bcf3a448892877d1dc31096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VertexObject: {fileID: 8094815627158821714, guid: 21dc69cf2f54ba84891f37681058ed51,
+    type: 3}
 --- !u!1 &1806313878
 GameObject:
   m_ObjectHideFlags: 0
