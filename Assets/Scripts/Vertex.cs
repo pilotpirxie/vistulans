@@ -45,6 +45,9 @@ public class Vertex : MonoBehaviour
     [SerializeField]
     public OwnerType Owner;
 
+    [SerializeField]
+    private bool Selected = false;
+
     void Start()
     {
         
@@ -53,5 +56,10 @@ public class Vertex : MonoBehaviour
     void FixedUpdate()
     {
         
+    }
+
+    private void OnMouseDown()
+    {
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().OnVertexTouch(gameObject.GetComponent<Vertex>().Id);
     }
 }
