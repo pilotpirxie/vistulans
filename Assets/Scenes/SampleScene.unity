@@ -414,8 +414,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec91dc786bc2514d834804a4f947144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  From: -1
-  To: -1
+  Target: -1
+  TargetObject: {fileID: 0}
   ArmyPower: 0
   Owner: 0
 --- !u!1 &1806313878

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8094815627158821719}
   m_Layer: 0
   m_Name: VertexObj
-  m_TagString: Untagged
+  m_TagString: Vertex
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,8 +60,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3052272049143884daa461b5b578fc33, type: 2}
-  - {fileID: 2100000, guid: b0b6c0c747d8c1a40b6a1ac81b5f9dde, type: 2}
-  - {fileID: 2100000, guid: a8a34d89a61ee6c47b529227cdd5cd56, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89,7 +87,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8094815627158821714}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -112,7 +110,6 @@ MonoBehaviour:
   Y: 0
   Level: 0
   Connections: []
-  Power: 0
+  ArmyPower: 0
   Owner: 0
   Selected: 0
-  originalMaterial: {fileID: 0}
