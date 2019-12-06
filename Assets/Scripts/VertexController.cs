@@ -18,7 +18,7 @@ public enum OwnerType
     EnemyThree
 };
 
-public class Vertex : MonoBehaviour
+public class VertexController : MonoBehaviour
 {
 
     [SerializeField]
@@ -40,7 +40,7 @@ public class Vertex : MonoBehaviour
     public List<GameObject> Connections;
 
     [SerializeField]
-    public int Power;
+    public int ArmyPower;
 
     [SerializeField]
     public OwnerType Owner;
@@ -60,6 +60,6 @@ public class Vertex : MonoBehaviour
 
     private void OnMouseDown()
     {
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().OnVertexTouch(gameObject.GetComponent<Vertex>().Id);
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().OnVertexTouch(gameObject.GetComponent<VertexController>().Id);
     }
 }

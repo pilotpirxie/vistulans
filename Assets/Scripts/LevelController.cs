@@ -20,33 +20,24 @@ public class LevelController : MonoBehaviour
         foreach (VertexProxy vertexProxy in levelConfig.levels[0].vertexProxies)
         {
             GameObject newVertex = GameObject.Instantiate(VertexObject, new Vector3(vertexProxy.x * 1f, 0.5f, -vertexProxy.y * 1f), Quaternion.identity);
-            newVertex.GetComponent<Vertex>().X = vertexProxy.x;
-            newVertex.GetComponent<Vertex>().Y = vertexProxy.y;
-            newVertex.GetComponent<Vertex>().Owner = (OwnerType)vertexProxy.owner;
-            newVertex.GetComponent<Vertex>().Type = (VertexType)vertexProxy.type;
-            newVertex.GetComponent<Vertex>().Power = 0;
-            newVertex.GetComponent<Vertex>().Level = 0;
-            newVertex.GetComponent<Vertex>().Id = vertexProxy.id;
+            newVertex.GetComponent<VertexController>().X = vertexProxy.x;
+            newVertex.GetComponent<VertexController>().Y = vertexProxy.y;
+            newVertex.GetComponent<VertexController>().Owner = (OwnerType)vertexProxy.owner;
+            newVertex.GetComponent<VertexController>().Type = (VertexType)vertexProxy.type;
+            newVertex.GetComponent<VertexController>().ArmyPower = 0;
+            newVertex.GetComponent<VertexController>().Level = 0;
+            newVertex.GetComponent<VertexController>().Id = vertexProxy.id;
             newVertex.tag = "Vertex";
             newVertex.name = $"vertex{vertexProxy.id}";
         }
 
         foreach (Connection connection in levelConfig.levels[0].connections)
         {
-            foreach (GameObject vertexA in GameObject.FindGameObjectsWithTag("Vertex"))
-            {
-                foreach (GameObject vertexB in GameObject.FindGameObjectsWithTag("Vertex"))
-                {
-                    if (vertexA.GetComponent<Vertex>().Id == connection.a)
-                    {
-                        if (vertexB.GetComponent<Vertex>().Id == connection.b)
-                        {
-                            vertexA.GetComponent<Vertex>().Connections.Add(vertexB);
-                            vertexB.GetComponent<Vertex>().Connections.Add(vertexA);
-                        }
-                    }
-                }
-            }
+            GameObject vertexA = GameObject.Find($"vertex{connection.a}");
+            GameObject vertexB = GameObject.Find($"vertex{connection.b}");
+
+            vertexA.GetComponent<VertexController>().Connections.Add(vertexB);
+            vertexB.GetComponent<VertexController>().Connections.Add(vertexA);
         }
     }
 
@@ -69,7 +60,7 @@ public class LevelController : MonoBehaviour
 
             vertex.GetComponent<Renderer>().material.color = Color.white;
 
-            foreach (GameObject connectedVertex in vertex.GetComponent<Vertex>().Connections)
+            foreach (GameObject connectedVertex in vertex.GetComponent<VertexController>().Connections)
             {
                 connectedVertex.GetComponent<Renderer>().material.color = Color.yellow;
             }
@@ -79,9 +70,9 @@ public class LevelController : MonoBehaviour
         {
             GameObject sourceVertex = GameObject.Find($"vertex{aId}");
 
-            foreach (GameObject possibleVertex in sourceVertex.GetComponent<Vertex>().Connections)
+            foreach (GameObject possibleVertex in sourceVertex.GetComponent<VertexController>().Connections)
             {
-                if (possibleVertex.GetComponent<Vertex>().Id == bId)
+                if (possibleVertex.GetComponent<VertexController>().Id == bId)
                 {
                     // send signal to move units
                     Debug.Log($"Sent unit from {aId} to {bId}");
@@ -95,6 +86,21 @@ public class LevelController : MonoBehaviour
 
             aId = -1;
             bId = -1;
+        }
+    }
+
+    public void SendArmy(int from, int to, int amount)
+    {
+        GameObject vertexA = GameObject.Find($"vertex{from}");
+        GameObject vertexB = GameObject.Find($"vertex{to}");
+
+        if (vertexA.GetComponent<VertexController>().ArmyPower >= amount)
+        {
+
+        }
+        else
+        {
+            // insufficient army power
         }
     }
 }
