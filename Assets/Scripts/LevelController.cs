@@ -6,6 +6,9 @@ public class LevelController : MonoBehaviour
     public GameObject VertexObject;
 
     [SerializeField]
+    public GameObject ArmyObject;
+
+    [SerializeField]
     private int aId = -1; 
 
     [SerializeField]
@@ -24,7 +27,7 @@ public class LevelController : MonoBehaviour
             newVertex.GetComponent<VertexController>().Y = vertexProxy.y;
             newVertex.GetComponent<VertexController>().Owner = (OwnerType)vertexProxy.owner;
             newVertex.GetComponent<VertexController>().Type = (VertexType)vertexProxy.type;
-            newVertex.GetComponent<VertexController>().ArmyPower = 0;
+            newVertex.GetComponent<VertexController>().ArmyPower = vertexProxy.power;
             newVertex.GetComponent<VertexController>().Level = 0;
             newVertex.GetComponent<VertexController>().Id = vertexProxy.id;
             newVertex.tag = "Vertex";
@@ -56,11 +59,11 @@ public class LevelController : MonoBehaviour
     {
         if (aId != -1 && bId == -1)
         {
-            GameObject vertex = GameObject.Find($"vertex{aId}");
+            GameObject selectedVertex = GameObject.Find($"vertex{aId}");
 
-            vertex.GetComponent<Renderer>().material.color = Color.white;
+            selectedVertex.GetComponent<Renderer>().material.color = Color.white;
 
-            foreach (GameObject connectedVertex in vertex.GetComponent<VertexController>().Connections)
+            foreach (GameObject connectedVertex in selectedVertex.GetComponent<VertexController>().Connections)
             {
                 connectedVertex.GetComponent<Renderer>().material.color = Color.yellow;
             }
@@ -68,14 +71,20 @@ public class LevelController : MonoBehaviour
 
         if (aId != -1 && bId != -1)
         {
-            GameObject sourceVertex = GameObject.Find($"vertex{aId}");
+            GameObject selectedVertex = GameObject.Find($"vertex{aId}");
 
-            foreach (GameObject possibleVertex in sourceVertex.GetComponent<VertexController>().Connections)
+            foreach (GameObject possibleVertex in selectedVertex.GetComponent<VertexController>().Connections)
             {
                 if (possibleVertex.GetComponent<VertexController>().Id == bId)
                 {
-                    // send signal to move units
-                    Debug.Log($"Sent unit from {aId} to {bId}");
+                    if (selectedVertex.GetComponent<VertexController>().ArmyPower > 1)
+                    {
+                        int armyPowerToSend = selectedVertex.GetComponent<VertexController>().ArmyPower / 2;
+                        selectedVertex.GetComponent<VertexController>().ArmyPower -= armyPowerToSend;
+
+                        SendArmy(aId, bId, armyPowerToSend);
+                        Debug.Log($"Sent unit from {aId} to {bId}");
+                    }
                 }
             }
 
@@ -89,14 +98,20 @@ public class LevelController : MonoBehaviour
         }
     }
 
-    public void SendArmy(int from, int to, int amount)
+    public void SendArmy(int origin, int target, int amount)
     {
-        GameObject vertexA = GameObject.Find($"vertex{from}");
-        GameObject vertexB = GameObject.Find($"vertex{to}");
+        GameObject vertexA = GameObject.Find($"vertex{origin}");
+        GameObject vertexB = GameObject.Find($"vertex{target}");
 
         if (vertexA.GetComponent<VertexController>().ArmyPower >= amount)
         {
-
+            Vector3 spawnPosition = vertexA.gameObject.transform.position;
+            spawnPosition.y = 0.25f;
+            GameObject newArmy = GameObject.Instantiate(ArmyObject, spawnPosition, Quaternion.identity);
+            newArmy.GetComponent<ArmyController>().Owner = vertexA.GetComponent<VertexController>().Owner;
+            newArmy.GetComponent<ArmyController>().ArmyPower = amount;
+            newArmy.GetComponent<ArmyController>().Origin = origin;
+            newArmy.GetComponent<ArmyController>().Target = target;
         }
         else
         {

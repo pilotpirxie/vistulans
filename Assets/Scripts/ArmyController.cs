@@ -45,7 +45,10 @@ public class ArmyController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        other.gameObject.GetComponent<ArmyController>().AlreadyTriggering = false;
+        if (other.gameObject.tag == "Army")
+        { 
+            other.gameObject.GetComponent<ArmyController>().AlreadyTriggering = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,23 +59,25 @@ public class ArmyController : MonoBehaviour
         {
             if (other.gameObject.tag == "Vertex")
             {
-                if (other.gameObject.GetComponent<VertexController>().Owner == Owner && other.gameObject.GetComponent<VertexController>().Id != Origin)
+                if (other.gameObject.GetComponent<VertexController>().Id != Origin)
                 {
-                    other.gameObject.GetComponent<VertexController>().ArmyPower += ArmyPower;
-                }
-                else
-                {
-                    other.gameObject.GetComponent<VertexController>().ArmyPower -= ArmyPower;
-
-                    if (other.gameObject.GetComponent<VertexController>().ArmyPower <= 0)
+                    if (other.gameObject.GetComponent<VertexController>().Owner == Owner)
                     {
-                        other.gameObject.GetComponent<VertexController>().Owner = Owner;
-                        other.gameObject.GetComponent<VertexController>().ArmyPower = Mathf.Abs(other.gameObject.GetComponent<VertexController>().ArmyPower);
+                        other.gameObject.GetComponent<VertexController>().ArmyPower += ArmyPower;
                     }
+                    else
+                    {
+                        other.gameObject.GetComponent<VertexController>().ArmyPower -= ArmyPower;
+
+                        if (other.gameObject.GetComponent<VertexController>().ArmyPower <= 0)
+                        {
+                            other.gameObject.GetComponent<VertexController>().Owner = Owner;
+                            other.gameObject.GetComponent<VertexController>().ArmyPower = Mathf.Abs(other.gameObject.GetComponent<VertexController>().ArmyPower);
+                        }
+                    }
+
+                    GameObject.Destroy(gameObject);
                 }
-
-                GameObject.Destroy(gameObject);
-
             }
             else if (other.gameObject.tag == "Army")
             {
