@@ -10,17 +10,17 @@
           "x": -4,
           "y": -4,
           "level": 0,
-          "owner": 0,
-          "power": 0
+          "owner": 1,
+          "power": 25
         },
         {
           "id": 1,
-          "type": 0,
+          "type": 1,
           "x": 3,
           "y": 3,
           "level": 0,
           "owner": 0,
-          "power": 0
+          "power": 40
         },
         {
           "id": 2,
@@ -28,8 +28,8 @@
           "x": 4,
           "y": -2,
           "level": 0,
-          "owner": 0,
-          "power": 0
+          "owner": 2,
+          "power": 15
         }
       ],
       "connections": [
