@@ -25,10 +25,10 @@ public class Vertex : MonoBehaviour
     public VertexType Type;
 
     [SerializeField]
-    private int X;
+    public int X;
 
     [SerializeField]
-    private int Y;
+    public int Y;
 
     [SerializeField]
     public int Level;
