@@ -308,6 +308,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VertexObject: {fileID: 8094815627158821714, guid: 21dc69cf2f54ba84891f37681058ed51,
     type: 3}
+  ArmyObject: {fileID: 3581865609455456488, guid: c8904c1d8460fc44796917282ca79d96,
+    type: 3}
   aId: -1
   bId: -1
 --- !u!1 &1806313878
