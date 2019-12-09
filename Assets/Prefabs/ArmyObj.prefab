@@ -107,10 +107,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Origin: -1
   Target: -1
-  TargetObject: {fileID: 0}
+  _targetObject: {fileID: 0}
   ArmyPower: 150
   Owner: 1
-  speed: 2
+  _movementSpeed: 2
   AlreadyTriggering: 0
 --- !u!54 &3581865609455456482
 Rigidbody:
