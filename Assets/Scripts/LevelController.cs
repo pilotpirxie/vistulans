@@ -9,10 +9,10 @@ public class LevelController : MonoBehaviour
     public GameObject ArmyObject;
 
     [SerializeField]
-    private int aId = -1; 
+    private int _touchedVertexA = -1; 
 
     [SerializeField]
-    private int bId = -1;
+    private int _touchedVertexB = -1;
 
     void Start()
     {
@@ -20,21 +20,21 @@ public class LevelController : MonoBehaviour
         Debug.Log($"Loaded level configuration: {levelConfigContent}");
         LevelConfig levelConfig = JsonUtility.FromJson<LevelConfig>(levelConfigContent.text);
 
-        foreach (VertexProxy vertexProxy in levelConfig.levels[0].vertexProxies)
+        foreach (VertexConfig vertexConfig in levelConfig.levels[0].verticies)
         {
-            GameObject newVertex = GameObject.Instantiate(VertexObject, new Vector3(vertexProxy.x * 1f, 0.5f, -vertexProxy.y * 1f), Quaternion.identity);
-            newVertex.GetComponent<VertexController>().X = vertexProxy.x;
-            newVertex.GetComponent<VertexController>().Y = vertexProxy.y;
-            newVertex.GetComponent<VertexController>().Owner = (OwnerType)vertexProxy.owner;
-            newVertex.GetComponent<VertexController>().Type = (VertexType)vertexProxy.type;
-            newVertex.GetComponent<VertexController>().ArmyPower = vertexProxy.power;
+            GameObject newVertex = GameObject.Instantiate(VertexObject, new Vector3(vertexConfig.x * 1f, 0.5f, -vertexConfig.y * 1f), Quaternion.identity);
+            newVertex.GetComponent<VertexController>().X = vertexConfig.x;
+            newVertex.GetComponent<VertexController>().Y = vertexConfig.y;
+            newVertex.GetComponent<VertexController>().Owner = (OwnerType)vertexConfig.owner;
+            newVertex.GetComponent<VertexController>().Type = (VertexType)vertexConfig.type;
+            newVertex.GetComponent<VertexController>().ArmyPower = vertexConfig.power;
             newVertex.GetComponent<VertexController>().Level = 0;
-            newVertex.GetComponent<VertexController>().Id = vertexProxy.id;
+            newVertex.GetComponent<VertexController>().Id = vertexConfig.id;
             newVertex.tag = "Vertex";
-            newVertex.name = $"vertex{vertexProxy.id}";
+            newVertex.name = $"vertex{vertexConfig.id}";
         }
 
-        foreach (Connection connection in levelConfig.levels[0].connections)
+        foreach (EdgeConfig connection in levelConfig.levels[0].edges)
         {
             GameObject vertexA = GameObject.Find($"vertex{connection.a}");
             GameObject vertexB = GameObject.Find($"vertex{connection.b}");
@@ -46,20 +46,20 @@ public class LevelController : MonoBehaviour
 
     public void OnVertexTouch(int id)
     {
-        if (aId == -1)
+        if (_touchedVertexA == -1)
         {
-            aId = id;
+            _touchedVertexA = id;
         } else
         {
-            bId = id;
+            _touchedVertexB = id;
         }
     }
 
     public void FixedUpdate()
     {
-        if (aId != -1 && bId == -1)
+        if (_touchedVertexA != -1 && _touchedVertexB == -1)
         {
-            GameObject selectedVertex = GameObject.Find($"vertex{aId}");
+            GameObject selectedVertex = GameObject.Find($"vertex{_touchedVertexA}");
 
             selectedVertex.GetComponent<Renderer>().material.color = Color.white;
 
@@ -69,21 +69,21 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        if (aId != -1 && bId != -1)
+        if (_touchedVertexA != -1 && _touchedVertexB != -1)
         {
-            GameObject selectedVertex = GameObject.Find($"vertex{aId}");
+            GameObject selectedVertex = GameObject.Find($"vertex{_touchedVertexA}");
 
             foreach (GameObject possibleVertex in selectedVertex.GetComponent<VertexController>().Connections)
             {
-                if (possibleVertex.GetComponent<VertexController>().Id == bId)
+                if (possibleVertex.GetComponent<VertexController>().Id == _touchedVertexB)
                 {
                     if (selectedVertex.GetComponent<VertexController>().ArmyPower > 1)
                     {
                         int armyPowerToSend = selectedVertex.GetComponent<VertexController>().ArmyPower / 2;
                         selectedVertex.GetComponent<VertexController>().ArmyPower -= armyPowerToSend;
 
-                        SendArmy(aId, bId, armyPowerToSend);
-                        Debug.Log($"Sent unit from {aId} to {bId}");
+                        SendArmy(_touchedVertexA, _touchedVertexB, armyPowerToSend);
+                        Debug.Log($"Sent unit from {_touchedVertexA} to {_touchedVertexB}");
                     }
                 }
             }
@@ -93,8 +93,8 @@ public class LevelController : MonoBehaviour
                 vertex.GetComponent<Renderer>().material.color = Color.clear;
             }
 
-            aId = -1;
-            bId = -1;
+            _touchedVertexA = -1;
+            _touchedVertexB = -1;
         }
     }
 

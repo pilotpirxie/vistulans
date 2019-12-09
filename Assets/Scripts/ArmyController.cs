@@ -11,7 +11,7 @@ public class ArmyController : MonoBehaviour
     public int Target = -1;
 
     [SerializeField]
-    private GameObject TargetObject;
+    private GameObject _targetObject;
 
     [SerializeField]
     public int ArmyPower = 0;
@@ -20,26 +20,29 @@ public class ArmyController : MonoBehaviour
     public OwnerType Owner = OwnerType.Wild;
 
     [SerializeField]
+    private float _movementSpeed = 1f;
+
+    [SerializeField]
     private bool AlreadyTriggering = false;
 
     void UpdateTarget(int newTarget)
     {
         Target = newTarget;
-        TargetObject = GameObject.Find($"vertex{Target}");
+        _targetObject = GameObject.Find($"vertex{Target}");
     }
 
     void FixedUpdate()
     {
-        if (TargetObject == null)
+        if (_targetObject == null)
         {
             UpdateTarget(Target);
         }
         else
         {
-            Vector3 targetDirection = TargetObject.gameObject.transform.position - transform.position;
+            Vector3 targetDirection = _targetObject.gameObject.transform.position - transform.position;
             targetDirection.y = 0;
             transform.rotation = Quaternion.LookRotation(targetDirection);
-            gameObject.transform.position += gameObject.transform.forward * 0.1f;
+            gameObject.transform.position += gameObject.transform.forward * _movementSpeed * Time.deltaTime;
         }
     }
 

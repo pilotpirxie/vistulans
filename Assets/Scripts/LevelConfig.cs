@@ -12,19 +12,19 @@ public class Level
 {
     public string title;
     public int background;
-    public List<VertexProxy> vertexProxies;
-    public List<Connection> connections;
+    public List<VertexConfig> verticies;
+    public List<EdgeConfig> edges;
 }
 
 [Serializable]
-public class Connection
+public class EdgeConfig
 {
     public int a;
     public int b;
 }
 
 [Serializable]
-public class VertexProxy
+public class VertexConfig
 {
     public int id, type, x, y, level, owner, power;
 }

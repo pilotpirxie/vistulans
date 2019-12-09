@@ -110,6 +110,7 @@ MonoBehaviour:
   TargetObject: {fileID: 0}
   ArmyPower: 150
   Owner: 1
+  speed: 2
   AlreadyTriggering: 0
 --- !u!54 &3581865609455456482
 Rigidbody:

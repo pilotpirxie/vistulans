@@ -3,7 +3,7 @@
     {
       "title": "Test map",
       "background": 0,
-      "vertexProxies": [
+      "verticies": [
         {
           "id": 0,
           "type": 0,
@@ -41,7 +41,7 @@
           "power": 15
         }
       ],
-      "connections": [
+      "edges": [
         {
           "a": 0,
           "b": 1

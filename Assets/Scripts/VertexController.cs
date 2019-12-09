@@ -46,7 +46,7 @@ public class VertexController : MonoBehaviour
     public OwnerType Owner;
 
     [SerializeField]
-    private bool Selected = false;
+    private bool _selected = false;
 
     void Start()
     {
