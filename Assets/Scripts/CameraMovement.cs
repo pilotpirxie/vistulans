@@ -18,22 +18,52 @@ public class CameraMovement : MonoBehaviour
 
     private bool _isTouchDown = false;
 
-    private Vector2 _touchPosition = new Vector2(0, 0);
+    private Vector2 _touchPosition0 = new Vector2(0, 0);
+
+    private Vector2 _touchPosition1 = new Vector2(0, 0);
 
     void Update()
     {
-        if (Input.touchCount > 0) {
-            Touch touch = Input.GetTouch(0);
-            _isTouchMove = touch.phase == TouchPhase.Moved;
-            _isTouchDown = touch.phase == TouchPhase.Began;
-            _touchPosition = touch.position;
+        if (Input.touchCount == 1) {
+            Touch touch0 = Input.GetTouch(0);
+            _isTouchMove = touch0.phase == TouchPhase.Moved;
+            _isTouchDown = touch0.phase == TouchPhase.Began;
+            _touchPosition0 = touch0.position;
 
-            MoveCamera(_touchPosition);
+            MoveCamera(_touchPosition0);
         }
         else
         {
             MoveCamera(Input.mousePosition);
         }
+
+        if (Input.touchCount == 2)
+        {
+            Touch touch0 = Input.GetTouch(0);
+            Touch touch1 = Input.GetTouch(1);
+
+            if (touch0.phase == TouchPhase.Began)
+            {
+                _touchPosition0 = Input.GetTouch(0).position;
+            }
+
+            if (touch1.phase == TouchPhase.Began)
+            {
+                _touchPosition1 = Input.GetTouch(1).position;
+            }
+
+            if (touch0.phase == TouchPhase.Moved && touch1.phase == TouchPhase.Moved)
+            {
+                Vector2 touchDragPosition0 = Input.GetTouch(0).position;
+                Vector2 touchDragPosition1 = Input.GetTouch(1).position;
+
+                float initialDistance = Vector2.Distance(_touchPosition0, _touchPosition1);
+                float dragDistance = Vector2.Distance(touchDragPosition0, touchDragPosition1);
+
+                float zoomDistance = dragDistance - initialDistance;
+            }
+        }
+
     }
 
     void MoveCamera(Vector2 inputScreenPosition)
