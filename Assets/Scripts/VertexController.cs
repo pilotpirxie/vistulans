@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum VertexType
@@ -20,6 +21,10 @@ public enum OwnerType
 
 public class VertexController : MonoBehaviour
 {
+
+    public GameObject BadgeObject;
+
+    private GameObject _badgeObject;
 
     [SerializeField]
     public int Id;
@@ -50,12 +55,14 @@ public class VertexController : MonoBehaviour
 
     void Start()
     {
-        
+        _badgeObject = GameObject.Instantiate(BadgeObject, gameObject.transform.position - new Vector3(0, 1f, 2f), Quaternion.identity);
     }
 
     void FixedUpdate()
     {
-        
+        _badgeObject.GetComponent<Badge>().LevelText.GetComponent<TextMeshProUGUI>().text = $"Lv. {Level}";
+        _badgeObject.GetComponent<Badge>().PowerText.GetComponent<TextMeshProUGUI>().text = $"{ArmyPower}";
+        _badgeObject.GetComponent<Badge>().TypeText.GetComponent<TextMeshProUGUI>().text = $"{Type.ToString()[0]}";
     }
 
     private void OnMouseDown()

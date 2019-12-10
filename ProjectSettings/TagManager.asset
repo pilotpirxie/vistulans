@@ -44,3 +44,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Badge
+    uniqueID: 1877942751
+    locked: 0
