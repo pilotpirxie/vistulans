@@ -50,7 +50,8 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 7752224544040329776, guid: 4ae9c68064d81b749b96e1ad18b246e7,
+    type: 3}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -268,7 +269,8 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 7752224544040329776, guid: 4ae9c68064d81b749b96e1ad18b246e7,
+    type: 3}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -486,7 +488,8 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 7752224544040329776, guid: 4ae9c68064d81b749b96e1ad18b246e7,
+    type: 3}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -793,6 +796,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00fdb2ab1d6f312438cd346237da910f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Level: 0
+  ArmyPower: 0
+  Type: 0
+  Owner: 0
   LevelText: {fileID: 8578020111109871217}
   PowerText: {fileID: 8578020110392023813}
   TypeText: {fileID: 8578020110847836548}
+  Background: {fileID: 8578020111151718891}
+  WildBackground: {fileID: 21300000, guid: 2aec1eb9755a48c4a874f01e8e3c09f4, type: 3}
+  PlayerBackground: {fileID: 21300000, guid: 113414d8c9df4a34996638675d8c0500, type: 3}
+  EnemyOneBackground: {fileID: 21300000, guid: a8d6731c4d47f314faa79445e0e26106, type: 3}
+  EnemyTwoBackground: {fileID: 21300000, guid: 8a6b69c06cbb8934db511502367d8ea0, type: 3}
+  EnemyThreeBackground: {fileID: 21300000, guid: 32846afc4d363744c9da327b35a8f66e,
+    type: 3}

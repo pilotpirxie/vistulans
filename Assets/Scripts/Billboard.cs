@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BillboardText : MonoBehaviour
+public class Billboard : MonoBehaviour
 {
     void Update()
     {

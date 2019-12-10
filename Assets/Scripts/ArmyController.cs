@@ -2,26 +2,19 @@
 
 public class ArmyController : MonoBehaviour
 {
-    [SerializeField]
     public int Origin = -1;
 
-    [SerializeField]
     public int Target = -1;
 
-    [SerializeField]
     private GameObject _targetObject;
 
-    [SerializeField]
     public int ArmyPower = 0;
 
-    [SerializeField]
     public OwnerType Owner = OwnerType.Wild;
 
-    [SerializeField]
-    private float _movementSpeed = 1f;
+    public float MovementSpeed = 1f;
 
-    [SerializeField]
-    private bool AlreadyTriggering = false;
+    public bool AlreadyTriggering = false;
 
     void UpdateTarget(int newTarget)
     {
@@ -40,7 +33,7 @@ public class ArmyController : MonoBehaviour
             Vector3 targetDirection = _targetObject.gameObject.transform.position - transform.position;
             targetDirection.y = 0;
             transform.rotation = Quaternion.LookRotation(targetDirection);
-            gameObject.transform.position += gameObject.transform.forward * _movementSpeed * Time.deltaTime;
+            gameObject.transform.position += gameObject.transform.forward * MovementSpeed * Time.deltaTime;
         }
     }
 
@@ -54,8 +47,6 @@ public class ArmyController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
-
         if (AlreadyTriggering == false)
         {
             if (other.gameObject.tag == "Vertex")

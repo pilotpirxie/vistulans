@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class GameplayController : MonoBehaviour
 {
-    public int Mana = 0;
-    public int Honey = 0;
+    /// <summary>
+    /// Indexed as follow:
+    /// 0 - player
+    /// 1 - enemy one
+    /// 2 - enemy two
+    /// 3 - enemy three
+    /// </summary>
+    public int[] Mana;
+    public int[] Honey;
 
     void Start()
     {
-        
+        Mana = new int[] { 0, 0, 0, 0 };
+        Honey = new int[] { 0, 0, 0, 0 }; 
     }
 
     void Update()

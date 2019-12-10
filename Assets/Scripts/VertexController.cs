@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public enum VertexType
@@ -26,28 +24,20 @@ public class VertexController : MonoBehaviour
     private GameObject _badgeObject;
     private GameObject _mechanismObject;
 
-    [SerializeField]
     public int Id;
 
-    [SerializeField]
     public VertexType Type;
 
-    [SerializeField]
     public int X;
 
-    [SerializeField]
     public int Y;
 
-    [SerializeField]
     public int Level;
 
-    [SerializeField]
     public List<GameObject> Connections;
 
-    [SerializeField]
     public int ArmyPower;
 
-    [SerializeField]
     public OwnerType Owner;
 
     [SerializeField]
@@ -69,25 +59,29 @@ public class VertexController : MonoBehaviour
 
     void IncreaseUnits()
     {
-        switch (Type)
+        if (Owner != OwnerType.Wild)
         {
-            case VertexType.Shrine:
-                _mechanismObject.GetComponent<GameplayController>().Mana += Level + 1;
-                break;
-            case VertexType.Village:
-                ArmyPower += Level + 1;
-                break;
-            case VertexType.Apiary:
-                _mechanismObject.GetComponent<GameplayController>().Honey += Level + 1;
-                break;
+            switch (Type)
+            {
+                case VertexType.Shrine:
+                    _mechanismObject.GetComponent<GameplayController>().Mana[(int)Owner - 1] += Level + 1;
+                    break;
+                case VertexType.Village:
+                    ArmyPower += Level + 1;
+                    break;
+                case VertexType.Apiary:
+                    _mechanismObject.GetComponent<GameplayController>().Honey[(int)Owner - 1] += Level + 1;
+                    break;
+            }
         }
     }
 
     void FixedUpdate()
     {
-        _badgeObject.GetComponent<Badge>().LevelText.GetComponent<TextMeshProUGUI>().text = $"Lv. {Level}";
-        _badgeObject.GetComponent<Badge>().PowerText.GetComponent<TextMeshProUGUI>().text = $"{ArmyPower}";
-        _badgeObject.GetComponent<Badge>().TypeText.GetComponent<TextMeshProUGUI>().text = $"{Type.ToString()[0]}";
+        _badgeObject.GetComponent<BadgeController>().Level = Level;
+        _badgeObject.GetComponent<BadgeController>().ArmyPower = ArmyPower;
+        _badgeObject.GetComponent<BadgeController>().Type = Type;
+        _badgeObject.GetComponent<BadgeController>().Owner = Owner;
     }
 
     private void OnMouseDown()
