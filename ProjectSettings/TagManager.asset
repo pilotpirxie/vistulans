@@ -7,6 +7,7 @@ TagManager:
   - Vertex
   - LevelController
   - Army
+  - Mechanism
   layers:
   - Default
   - TransparentFX
