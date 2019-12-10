@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class LevelController : MonoBehaviour
+public class GraphController : MonoBehaviour
 {
     [SerializeField]
     public GameObject VertexObject;

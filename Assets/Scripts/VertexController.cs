@@ -23,8 +23,8 @@ public class VertexController : MonoBehaviour
 {
 
     public GameObject BadgeObject;
-
     private GameObject _badgeObject;
+    private GameObject _mechanismObject;
 
     [SerializeField]
     public int Id;
@@ -53,9 +53,34 @@ public class VertexController : MonoBehaviour
     [SerializeField]
     private bool _selected = false;
 
+    private byte _timer = 0;
+
     void Start()
     {
         _badgeObject = GameObject.Instantiate(BadgeObject, gameObject.transform.position - new Vector3(0, 1f, 2f), Quaternion.identity);
+
+        InvokeRepeating("IncreaseUnits", 2.0f, 2.0f);
+
+        if (_mechanismObject == null)
+        {
+            _mechanismObject = GameObject.Find("Mechanism");
+        }
+    }
+
+    void IncreaseUnits()
+    {
+        switch (Type)
+        {
+            case VertexType.Shrine:
+                _mechanismObject.GetComponent<GameplayController>().Mana += Level + 1;
+                break;
+            case VertexType.Village:
+                ArmyPower += Level + 1;
+                break;
+            case VertexType.Apiary:
+                _mechanismObject.GetComponent<GameplayController>().Honey += Level + 1;
+                break;
+        }
     }
 
     void FixedUpdate()
@@ -67,6 +92,6 @@ public class VertexController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().OnVertexTouch(gameObject.GetComponent<VertexController>().Id);
+        _mechanismObject.GetComponent<GraphController>().OnVertexTouch(gameObject.GetComponent<VertexController>().Id);
     }
 }
