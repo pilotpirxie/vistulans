@@ -20,7 +20,7 @@ public class CameraMovement : MonoBehaviour
 
     private Vector2 _touchPosition = new Vector2(0, 0);
 
-    void FixedUpdate()
+    void Update()
     {
         if (Input.touchCount > 0) {
             Touch touch = Input.GetTouch(0);
