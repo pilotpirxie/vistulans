@@ -187,7 +187,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -379,8 +379,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -365, y: 5}
-  m_SizeDelta: {x: 360, y: 90}
+  m_AnchoredPosition: {x: -185, y: 5}
+  m_SizeDelta: {x: 180, y: 90}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1406649562
 MonoBehaviour:
@@ -453,7 +453,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -165, y: 20}
+  m_AnchoredPosition: {x: -170, y: 20}
   m_SizeDelta: {x: 150, y: 60}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1472359017
@@ -589,7 +589,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -599,7 +599,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Upgrade for 30 honey
+  m_Text: 'UPGRADE
+
+    30 HONEY'
 --- !u!222 &1805548830
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -776,6 +778,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _zoomSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 588894499465828033, guid: 4ae9c68064d81b749b96e1ad18b246e7,
+        type: 3}
+      propertyPath: _maxMoveSpeed
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7752224544040329776, guid: 4ae9c68064d81b749b96e1ad18b246e7,
         type: 3}
