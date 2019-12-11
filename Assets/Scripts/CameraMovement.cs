@@ -2,9 +2,13 @@
 
 public class CameraMovement : MonoBehaviour
 {
-    public float _zoomSpeed = 2.0f;
+    public float ZoomSpeed = 2.0f;
 
-    public float _maxMoveSpeed = 0.3f;
+    public float MaxMoveSpeed = 0.3f;
+
+    public float MinHeight = 2f;
+
+    public float MaxHeight = 8f;
 
     private Vector3 _startScreenPosition = Vector3.zero;
 
@@ -138,17 +142,13 @@ public class CameraMovement : MonoBehaviour
 
     void TransformCamera()
     {
-        _targetPosition = Vector3.MoveTowards(transform.position, _targetPosition, _maxMoveSpeed);
+        _targetPosition = Vector3.MoveTowards(transform.position, _targetPosition, MaxMoveSpeed);
         float distance = Vector3.Distance(transform.position, _targetPosition);
 
-        if (distance >= _maxMoveSpeed / 5 && distance <= _maxMoveSpeed * 2)
+        if (distance >= MaxMoveSpeed / 5 && distance <= MaxMoveSpeed * 2)
         {
             transform.position = _targetPosition;
             _isMovingTo = false;
-        }
-        else
-        {
-            Debug.Log($"Too long {distance}");
         }
     }
 
@@ -164,11 +164,17 @@ public class CameraMovement : MonoBehaviour
     {
         if (zoomIn)
         {
-            gameObject.transform.Translate(new Vector3(0, -1, 2) * Time.deltaTime * _zoomSpeed);
+            if (MinHeight < gameObject.transform.position.y)
+            {
+                gameObject.transform.Translate(new Vector3(0, -1, 2) * Time.deltaTime * ZoomSpeed);
+            }
         }
         else
         {
-            gameObject.transform.Translate(new Vector3(0, 1, -2) * Time.deltaTime * _zoomSpeed);
+            if (MaxHeight > gameObject.transform.position.y)
+            {
+                gameObject.transform.Translate(new Vector3(0, 1, -2) * Time.deltaTime * ZoomSpeed);
+            }
         }
     }
 }
