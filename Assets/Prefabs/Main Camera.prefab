@@ -95,4 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1268aa3c24b4354f9103dccf86cab31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 15
+  _movementSpeed: 15
+  _zoomSpeed: 5
+  _touchPosition0: {x: 0, y: 0}
+  _touchPosition1: {x: 0, y: 0}
+  _isZooming: 0
+  _isDragging: 0
