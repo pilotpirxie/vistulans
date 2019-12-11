@@ -13,11 +13,13 @@ public class GameplayController : MonoBehaviour
     /// </summary>
     public int[] Mana;
     public int[] Honey;
+    public int[] Army;
 
     void Start()
     {
         Mana = new int[] { 0, 0, 0, 0 };
         Honey = new int[] { 0, 0, 0, 0 }; 
+        Army = new int[] { 0, 0, 0, 0 }; 
     }
 
     void Update()

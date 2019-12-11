@@ -28,7 +28,7 @@ public class GraphController : MonoBehaviour
             newVertex.GetComponent<VertexController>().Owner = (OwnerType)vertexConfig.owner;
             newVertex.GetComponent<VertexController>().Type = (VertexType)vertexConfig.type;
             newVertex.GetComponent<VertexController>().ArmyPower = vertexConfig.power;
-            newVertex.GetComponent<VertexController>().Level = 0;
+            newVertex.GetComponent<VertexController>().Level = vertexConfig.level;
             newVertex.GetComponent<VertexController>().Id = vertexConfig.id;
             newVertex.tag = "Vertex";
             newVertex.name = $"vertex{vertexConfig.id}";

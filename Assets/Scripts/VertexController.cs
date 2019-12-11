@@ -64,13 +64,13 @@ public class VertexController : MonoBehaviour
             switch (Type)
             {
                 case VertexType.Shrine:
-                    _mechanismObject.GetComponent<GameplayController>().Mana[(int)Owner - 1] += Level + 1;
+                    _mechanismObject.GetComponent<GameplayController>().Mana[(int)Owner - 1] += Level;
                     break;
                 case VertexType.Village:
                     ArmyPower += Level + 1;
                     break;
                 case VertexType.Apiary:
-                    _mechanismObject.GetComponent<GameplayController>().Honey[(int)Owner - 1] += Level + 1;
+                    _mechanismObject.GetComponent<GameplayController>().Honey[(int)Owner - 1] += Level;
                     break;
             }
         }
