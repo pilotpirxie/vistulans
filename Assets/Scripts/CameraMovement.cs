@@ -4,6 +4,8 @@ public class CameraMovement : MonoBehaviour
 {
     public float _zoomSpeed = 2.0f;
 
+    public float _maxMoveSpeed = 0.3f;
+
     private Vector3 _startScreenPosition = Vector3.zero;
 
     private Vector3 _currentScreenPosition = Vector3.zero;
@@ -13,10 +15,6 @@ public class CameraMovement : MonoBehaviour
     private bool _isMovingTo = false;
 
     private Vector3 _targetPosition;
-
-    private bool _isTouchMove = false;
-
-    private bool _isTouchDown = false;
 
     [SerializeField]
     private Vector2 _touchPosition0 = new Vector2(0, 0);
@@ -37,26 +35,16 @@ public class CameraMovement : MonoBehaviour
             if (Input.touchCount == 1 && _isZooming == false)
             {
                 Touch touch0 = Input.GetTouch(0);
-                _isTouchMove = touch0.phase == TouchPhase.Moved;
-                _isTouchDown = touch0.phase == TouchPhase.Stationary;
 
-                if (_isTouchDown)
+                if (touch0.phase == TouchPhase.Stationary)
                 {
-                    _startScreenPosition = touch0.position;
-                    _cameraPosition = transform.position;
+                    SetStartScreenPosition(touch0.position);
                 }
 
-                if (_isTouchMove == true)
+                if (touch0.phase == TouchPhase.Moved)
                 {
                     _isDragging = true;
-
-                    _currentScreenPosition = touch0.position;
-                    _currentScreenPosition.z = _startScreenPosition.z = _cameraPosition.y;
-                    Vector3 direction = Camera.main.ScreenToWorldPoint(_currentScreenPosition) - Camera.main.ScreenToWorldPoint(_startScreenPosition);
-                    direction = direction * -1;
-                    _targetPosition = _cameraPosition + direction;
-
-                    _isMovingTo = true;
+                    SetMoveScreenPosition(Input.mousePosition);
                 }
             }
 
@@ -78,9 +66,7 @@ public class CameraMovement : MonoBehaviour
                     Vector2 touchDragPosition0 = Input.GetTouch(0).position;
                     Vector2 touchDragPosition1 = Input.GetTouch(1).position;
 
-                    float initialDistance = Vector2.Distance(_touchPosition0, _touchPosition1);
-                    float dragDistance = Vector2.Distance(touchDragPosition0, touchDragPosition1);
-                    float zoomDistance = dragDistance - initialDistance;
+                    float zoomDistance = Vector2.Distance(touchDragPosition0, touchDragPosition1) - Vector2.Distance(_touchPosition0, _touchPosition1);
 
                     if (zoomDistance > 5f)
                     {
@@ -105,39 +91,24 @@ public class CameraMovement : MonoBehaviour
         }
         else
         {
-            _isDragging = false;
-            _isZooming = false;
-            _touchPosition0 = new Vector2(0, 0);
-            _touchPosition1 = new Vector2(0, 0);
+            ResetPositions();
 
             if (Input.GetMouseButtonDown(0))
             {
-                _startScreenPosition = Input.mousePosition;
-                _cameraPosition = transform.position;
+                SetStartScreenPosition(Input.mousePosition);
             }
 
             if (Input.GetMouseButton(0))
             {
-                _currentScreenPosition = Input.mousePosition;
-                _currentScreenPosition.z = _startScreenPosition.z = _cameraPosition.y;
-                Vector3 direction = Camera.main.ScreenToWorldPoint(_currentScreenPosition) - Camera.main.ScreenToWorldPoint(_startScreenPosition);
-                direction = direction * -1;
-                _targetPosition = _cameraPosition + direction;
-
-                _isMovingTo = true;
+                SetMoveScreenPosition(Input.mousePosition);
             }
         }
 
-        if (_isMovingTo)
+        if (_isMovingTo == true)
         {
-            _targetPosition.y = transform.position.y;
-            transform.position = _targetPosition;
-
-            if (transform.position == _targetPosition)
-            {
-                _isMovingTo = false;
-            }
+            TransformCamera();
         }
+        
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
@@ -147,6 +118,46 @@ public class CameraMovement : MonoBehaviour
         {
             Zoom(false);
         }
+    }
+
+    void SetStartScreenPosition(Vector3 screenPos)
+    {
+        _startScreenPosition = screenPos;
+        _cameraPosition = transform.position;
+    }
+
+    void SetMoveScreenPosition(Vector3 newScreenPos)
+    {
+        _currentScreenPosition = newScreenPos;
+        _currentScreenPosition.z = _startScreenPosition.z = _cameraPosition.y;
+        Vector3 direction = (Camera.main.ScreenToWorldPoint(_currentScreenPosition) - Camera.main.ScreenToWorldPoint(_startScreenPosition)) * -1;
+        _targetPosition = _cameraPosition + direction;
+        _targetPosition.y = transform.position.y;
+        _isMovingTo = true;
+    }
+
+    void TransformCamera()
+    {
+        _targetPosition = Vector3.MoveTowards(transform.position, _targetPosition, _maxMoveSpeed);
+        float distance = Vector3.Distance(transform.position, _targetPosition);
+
+        if (distance >= _maxMoveSpeed / 5 && distance <= _maxMoveSpeed * 2)
+        {
+            transform.position = _targetPosition;
+            _isMovingTo = false;
+        }
+        else
+        {
+            Debug.Log($"Too long {distance}");
+        }
+    }
+
+    void ResetPositions()
+    {
+        _isDragging = false;
+        _isZooming = false;
+        _touchPosition0 = new Vector2(0, 0);
+        _touchPosition1 = new Vector2(0, 0);
     }
 
     void Zoom(bool zoomIn = true)
