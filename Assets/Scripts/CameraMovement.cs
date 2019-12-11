@@ -91,11 +91,11 @@ public class CameraMovement : MonoBehaviour
 
                     if (zoomDistance > 5f)
                     {
-                        gameObject.transform.Translate(new Vector3(0, -1, 2) * Time.deltaTime * _zoomSpeed);
+                        Zoom(true);
                     }
                     else if (zoomDistance < -5f)
                     {
-                        gameObject.transform.Translate(new Vector3(0, 1, -2) * Time.deltaTime * _zoomSpeed);
+                        Zoom(false);
                     }
                 }
 
@@ -144,6 +144,18 @@ public class CameraMovement : MonoBehaviour
             {
                 _isMovingTo = false;
             }
+        }
+    }
+
+    void Zoom(bool zoomIn = true)
+    {
+        if (zoomIn)
+        {
+            gameObject.transform.Translate(new Vector3(0, -1, 2) * Time.deltaTime * _zoomSpeed);
+        }
+        else
+        {
+            gameObject.transform.Translate(new Vector3(0, 1, -2) * Time.deltaTime * _zoomSpeed);
         }
     }
 }
