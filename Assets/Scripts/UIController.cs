@@ -7,9 +7,9 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     public Button UpgradeButton;
+    public TextMeshProUGUI UpgradeCostText;
     public TextMeshProUGUI HoneyText;
     public TextMeshProUGUI ManaText;
-    public TextMeshProUGUI ArmyText;
 
     private GameplayController _gameplayController;
 
@@ -30,14 +30,19 @@ public class UIController : MonoBehaviour
             ManaText.text = _gameplayController.Mana[0].ToString();
         }
 
-        if (ArmyText.text != _gameplayController.Army[0].ToString())
+        if (_gameplayController.SelectedVertexA != null && _gameplayController.SelectedVertexA.Level < 5)
         {
-            ArmyText.text = _gameplayController.Army[0].ToString();
+            UpgradeButton.gameObject.SetActive(true);
+            UpgradeCostText.text = $"{_gameplayController.SelectedVertexA.Level * 25} HONEY";
+        }
+        else
+        {
+            UpgradeButton.gameObject.SetActive(false);
         }
     }
 
     public void OnUpgrade()
     {
-
+        _gameplayController.UpgradeVertex(_gameplayController.SelectedVertexA.Id);
     }
 }

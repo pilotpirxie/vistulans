@@ -8,14 +8,12 @@ public class GraphController : MonoBehaviour
     [SerializeField]
     public GameObject ArmyObject;
 
-    [SerializeField]
-    private int _touchedVertexAId = -1; 
-
-    [SerializeField]
-    private int _touchedVertexBId = -1;
+    private GameplayController _gameplayController;
 
     void Start()
     {
+        _gameplayController = GameObject.FindWithTag("Mechanism").GetComponent<GameplayController>();
+
         TextAsset levelConfigContent = Resources.Load<TextAsset>("Config/levels");
         Debug.Log($"Loaded level configuration: {levelConfigContent}");
         LevelConfig levelConfig = JsonUtility.FromJson<LevelConfig>(levelConfigContent.text);
@@ -46,20 +44,20 @@ public class GraphController : MonoBehaviour
 
     public void OnVertexTouch(int id)
     {
-        if (_touchedVertexAId == -1)
+        if (_gameplayController.SelectedVertexA == null)
         {
-            _touchedVertexAId = id;
+            _gameplayController.SelectedVertexA = GameObject.Find($"vertex{id}").GetComponent<VertexController>();
         } else
         {
-            _touchedVertexBId = id;
+            _gameplayController.SelectedVertexB = GameObject.Find($"vertex{id}").GetComponent<VertexController>();
         }
     }
 
     public void FixedUpdate()
     {
-        if (_touchedVertexAId != -1 && _touchedVertexBId == -1)
+        if (_gameplayController.SelectedVertexA != null && _gameplayController.SelectedVertexB == null)
         {
-            GameObject selectedVertex = GameObject.Find($"vertex{_touchedVertexAId}");
+            GameObject selectedVertex = GameObject.Find($"vertex{_gameplayController.SelectedVertexA.Id}");
 
             selectedVertex.GetComponent<Renderer>().material.color = Color.white;
 
@@ -69,21 +67,21 @@ public class GraphController : MonoBehaviour
             }
         }
 
-        if (_touchedVertexAId != -1 && _touchedVertexBId != -1)
+        if (_gameplayController.SelectedVertexA != null && _gameplayController.SelectedVertexB != null)
         {
-            GameObject selectedVertex = GameObject.Find($"vertex{_touchedVertexAId}");
+            GameObject selectedVertex = GameObject.Find($"vertex{_gameplayController.SelectedVertexA.Id}");
 
             foreach (GameObject possibleVertex in selectedVertex.GetComponent<VertexController>().Connections)
             {
-                if (possibleVertex.GetComponent<VertexController>().Id == _touchedVertexBId)
+                if (possibleVertex.GetComponent<VertexController>().Id == _gameplayController.SelectedVertexB.Id)
                 {
                     if (selectedVertex.GetComponent<VertexController>().ArmyPower > 1)
                     {
                         int armyPowerToSend = selectedVertex.GetComponent<VertexController>().ArmyPower / 2;
                         selectedVertex.GetComponent<VertexController>().ArmyPower -= armyPowerToSend;
 
-                        SendArmy(_touchedVertexAId, _touchedVertexBId, armyPowerToSend);
-                        Debug.Log($"Sent unit from {_touchedVertexAId} to {_touchedVertexBId}");
+                        SendArmy(_gameplayController.SelectedVertexA.Id, _gameplayController.SelectedVertexB.Id, armyPowerToSend);
+                        Debug.Log($"Sent unit from {_gameplayController.SelectedVertexA.Id} to {_gameplayController.SelectedVertexB.Id}");
                     }
                 }
             }
@@ -93,8 +91,8 @@ public class GraphController : MonoBehaviour
                 vertex.GetComponent<Renderer>().material.color = Color.clear;
             }
 
-            _touchedVertexAId = -1;
-            _touchedVertexBId = -1;
+            _gameplayController.SelectedVertexA = null;
+            _gameplayController.SelectedVertexB = null;
         }
     }
 
