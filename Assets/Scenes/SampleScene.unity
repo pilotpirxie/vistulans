@@ -777,6 +777,11 @@ PrefabInstance:
       propertyPath: _zoomSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7752224544040329776, guid: 4ae9c68064d81b749b96e1ad18b246e7,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3993901705841455284, guid: 4ae9c68064d81b749b96e1ad18b246e7,
         type: 3}
       propertyPath: _movementSpeed
