@@ -43,6 +43,6 @@ public class UIController : MonoBehaviour
 
     public void OnUpgrade()
     {
-        _gameplayController.UpgradeVertex(_gameplayController.SelectedVertexA.Id);
+        _gameplayController.UpgradeVertex(_gameplayController.SelectedVertexA);
     }
 }

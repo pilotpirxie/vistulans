@@ -77,7 +77,7 @@ public class GraphController : MonoBehaviour
                 {
                     if (selectedVertex.GetComponent<VertexController>().ArmyPower > 1)
                     {
-                        int armyPowerToSend = selectedVertex.GetComponent<VertexController>().ArmyPower / 2;
+                        int armyPowerToSend = (int)Mathf.Floor(selectedVertex.GetComponent<VertexController>().ArmyPower * _gameplayController.TransportPart);
                         selectedVertex.GetComponent<VertexController>().ArmyPower -= armyPowerToSend;
 
                         SendArmy(_gameplayController.SelectedVertexA.Id, _gameplayController.SelectedVertexB.Id, armyPowerToSend);

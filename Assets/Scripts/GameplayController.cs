@@ -22,6 +22,8 @@ public class GameplayController : MonoBehaviour
 
     public VertexController SelectedVertexB;
 
+    public float TransportPart = 0.5f;
+
     void Start()
     {
         Mana = new int[] { 0, 0, 0, 0 };
@@ -64,12 +66,47 @@ public class GameplayController : MonoBehaviour
         }
     }
 
-    public void UpgradeVertex(int vertexId)
+    public void UpgradeVertex(VertexController vertex)
     {
-        if (SelectedVertexA.Level < 5 && Honey[0] >= SelectedVertexA.Level * 25)
+        if (vertex.Level < 5 && Honey[(int)vertex.Owner-1] >= vertex.Level * 25)
         {
-            Honey[0] -= SelectedVertexA.Level * 25;
-            SelectedVertexA.Level++;
+            Honey[(int)vertex.Owner - 1] -= vertex.Level * 25;
+            vertex.Level++;
         }
+    }
+
+    public void CastOffensiveSpell(VertexController vertex)
+    {
+        if (vertex.ArmyPower > 1)
+        {
+            vertex.ArmyPower -= 100;
+        }
+
+        if (vertex.ArmyPower < 1)
+        {
+            vertex.ArmyPower = 1;
+        }
+    }
+
+    public void CastTeleportSpell(VertexController vertexA, VertexController vertexB)
+    {
+        if (vertexA.Owner == vertexB.Owner)
+        {
+            int toMove = (int)Mathf.Floor(vertexA.ArmyPower * TransportPart);
+            vertexA.ArmyPower -= toMove;
+            vertexB.ArmyPower += toMove;
+        }
+    }
+
+    public void CastTakeoverCast(VertexController vertex, OwnerType castOwner)
+    {
+        vertex.ArmyPower -= (int)Mathf.Floor(vertex.ArmyPower * 0.5f);
+
+        if (vertex.ArmyPower < 1)
+        {
+            vertex.ArmyPower = 1;
+        }
+
+        vertex.Owner = castOwner;
     }
 }
