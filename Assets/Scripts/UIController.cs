@@ -63,37 +63,16 @@ public class UIController : MonoBehaviour
 
     public void OnOffensiveSpellButton()
     {
-        if (_gameplayController.Mana[0] >= 100)
-        {
-            _gameplayController.SetSpellToCast(0);
-        }
-        else
-        {
-            Debug.Log("Insufficient mana");
-        }
+        _gameplayController.SetSpellToCast(0);
     }   
         
     public void OnEarthquakeSpellButton()
     {
-        if (_gameplayController.Mana[0] >= 300)
-        {
-            _gameplayController.SetSpellToCast(1);
-        }
-        else
-        {
-            Debug.Log("Insufficient mana");
-        }
+        _gameplayController.SetSpellToCast(1);
     }   
         
     public void OnTakeoverSpellButton()
-    {   
-        if (_gameplayController.Mana[0] >= 500)
-        {
-            _gameplayController.SetSpellToCast(2);
-        }
-        else
-        {
-            Debug.Log("Insufficient mana");
-        }
+    {
+        _gameplayController.SetSpellToCast(2);
     }
 }

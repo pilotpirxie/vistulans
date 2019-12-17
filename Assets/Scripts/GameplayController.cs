@@ -113,16 +113,25 @@ public class GameplayController : MonoBehaviour
 
     public void SetSpellToCast(int spellIndex = -1)
     {
-        _graphController.ClearSelection();
-
-        if (spellIndex == SpellToCast)
+        if (spellIndex == 0 && Mana[0] >= 500
+            || spellIndex == 1 && Mana[0] >= 300
+            || spellIndex == 2 && Mana[0] >= 500)
         {
-            SpellToCast = -1;
+            if (spellIndex == SpellToCast)
+            {
+                SpellToCast = -1;
+            }
+            else
+            {
+                SpellToCast = spellIndex;
+            }
         }
         else
         {
-            SpellToCast = spellIndex;
+            Debug.Log("Insufficient mana");
         }
+
+        _graphController.ClearSelection();
     }
 
     public void CastOffensiveSpell(VertexController vertex)
