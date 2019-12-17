@@ -19,10 +19,19 @@ public class GameplayController : MonoBehaviour
     private List<VertexController> _vertexList;
 
     public VertexController SelectedVertexA;
-
     public VertexController SelectedVertexB;
 
+    public GraphController _graphController;
+
     public float TransportPart = 0.5f;
+
+    /// <summary>
+    /// -1 = none
+    /// 0 = offensive
+    /// 1 = earthquake
+    /// 2 = takeover
+    /// </summary>
+    public int SpellToCast = -1;
 
     void Start()
     {
@@ -36,6 +45,8 @@ public class GameplayController : MonoBehaviour
         }
 
         InvokeRepeating("IncreaseUnits", 2.0f, 2.0f);
+
+        _graphController = gameObject.GetComponent<GraphController>();
     }
 
     void IncreaseUnits()
@@ -66,6 +77,31 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    public void FixedUpdate()
+    {
+        if (SelectedVertexA != null && SelectedVertexB == null && SpellToCast != -1)
+        {
+            switch(SpellToCast)
+            {
+                case 0:
+                    CastOffensiveSpell(SelectedVertexA);
+                    Mana[0] -= 100;
+                    break;
+                case 1:
+                    CastEarthquakeSpell(SelectedVertexA);
+                    Mana[0] -= 300;
+                    break;
+                case 2:
+                    CastTakeoverCast(SelectedVertexA, OwnerType.Player);
+                    Mana[0] -= 500;
+                    break;
+            }
+
+            SpellToCast = -1;
+            _graphController.ClearSelection();
+        }
+    }
+
     public void UpgradeVertex(VertexController vertex)
     {
         if (vertex.Level < 5 && Honey[(int)vertex.Owner-1] >= vertex.Level * 25)
@@ -75,12 +111,23 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    public void SetSpellToCast(int spellIndex = -1)
+    {
+        _graphController.ClearSelection();
+
+        if (spellIndex == SpellToCast)
+        {
+            SpellToCast = -1;
+        }
+        else
+        {
+            SpellToCast = spellIndex;
+        }
+    }
+
     public void CastOffensiveSpell(VertexController vertex)
     {
-        if (vertex.ArmyPower > 1)
-        {
-            vertex.ArmyPower -= 100;
-        }
+        vertex.ArmyPower -= 100;
 
         if (vertex.ArmyPower < 1)
         {
@@ -88,17 +135,23 @@ public class GameplayController : MonoBehaviour
         }
     }
 
-    public void CastTeleportSpell(VertexController vertexA, VertexController vertexB)
+    public void CastEarthquakeSpell(VertexController vertex)
     {
-        if (vertexA.Owner == vertexB.Owner)
+        foreach (VertexController tempVertex in _vertexList)
         {
-            int toMove = (int)Mathf.Floor(vertexA.ArmyPower * TransportPart);
-            vertexA.ArmyPower -= toMove;
-            vertexB.ArmyPower += toMove;
+            if (tempVertex.Owner == vertex.Owner)
+            {
+                tempVertex.ArmyPower -= 50;
+
+                if (tempVertex.ArmyPower < 1)
+                {
+                    tempVertex.ArmyPower = 1;
+                }
+            }
         }
     }
 
-    public void CastTakeoverCast(VertexController vertex, OwnerType castOwner)
+    public void CastTakeoverCast(VertexController vertex, OwnerType whoCast)
     {
         vertex.ArmyPower -= (int)Mathf.Floor(vertex.ArmyPower * 0.5f);
 
@@ -107,6 +160,6 @@ public class GameplayController : MonoBehaviour
             vertex.ArmyPower = 1;
         }
 
-        vertex.Owner = castOwner;
+        vertex.Owner = whoCast;
     }
 }

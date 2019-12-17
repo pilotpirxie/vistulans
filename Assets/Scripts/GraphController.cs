@@ -47,7 +47,8 @@ public class GraphController : MonoBehaviour
         if (_gameplayController.SelectedVertexA == null)
         {
             _gameplayController.SelectedVertexA = GameObject.Find($"vertex{id}").GetComponent<VertexController>();
-        } else
+        }
+        else
         {
             _gameplayController.SelectedVertexB = GameObject.Find($"vertex{id}").GetComponent<VertexController>();
         }
@@ -58,7 +59,6 @@ public class GraphController : MonoBehaviour
         if (_gameplayController.SelectedVertexA != null && _gameplayController.SelectedVertexB == null)
         {
             GameObject selectedVertex = GameObject.Find($"vertex{_gameplayController.SelectedVertexA.Id}");
-
             selectedVertex.GetComponent<Renderer>().material.color = Color.white;
 
             foreach (GameObject connectedVertex in selectedVertex.GetComponent<VertexController>().Connections)
@@ -75,7 +75,7 @@ public class GraphController : MonoBehaviour
             {
                 if (possibleVertex.GetComponent<VertexController>().Id == _gameplayController.SelectedVertexB.Id)
                 {
-                    if (selectedVertex.GetComponent<VertexController>().ArmyPower > 1)
+                    if (selectedVertex.GetComponent<VertexController>().ArmyPower > 1 && _gameplayController.SpellToCast == -1)
                     {
                         int armyPowerToSend = (int)Mathf.Floor(selectedVertex.GetComponent<VertexController>().ArmyPower * _gameplayController.TransportPart);
                         selectedVertex.GetComponent<VertexController>().ArmyPower -= armyPowerToSend;
@@ -86,14 +86,19 @@ public class GraphController : MonoBehaviour
                 }
             }
 
-            foreach (GameObject vertex in GameObject.FindGameObjectsWithTag("Vertex"))
-            {
-                vertex.GetComponent<Renderer>().material.color = Color.clear;
-            }
-
-            _gameplayController.SelectedVertexA = null;
-            _gameplayController.SelectedVertexB = null;
+            ClearSelection();
         }
+    }
+
+    public void ClearSelection()
+    {
+        foreach (GameObject vertex in GameObject.FindGameObjectsWithTag("Vertex"))
+        {
+            vertex.GetComponent<Renderer>().material.color = Color.clear;
+        }
+
+        _gameplayController.SelectedVertexA = null;
+        _gameplayController.SelectedVertexB = null;
     }
 
     public void SendArmy(int origin, int target, int amount)

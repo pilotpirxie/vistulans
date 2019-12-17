@@ -7,9 +7,15 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     public Button UpgradeButton;
+    public Button SpellOffensive;
+    public Button SpellEarthquake;
+    public Button SpellTakeover;
+
     public TextMeshProUGUI UpgradeCostText;
     public TextMeshProUGUI HoneyText;
     public TextMeshProUGUI ManaText;
+
+    public Image CastingSpellVignette;
 
     private GameplayController _gameplayController;
 
@@ -39,10 +45,55 @@ public class UIController : MonoBehaviour
         {
             UpgradeButton.gameObject.SetActive(false);
         }
+
+        if (_gameplayController.SpellToCast != -1)
+        {
+            CastingSpellVignette.gameObject.SetActive(true);
+        }
+        else
+        {
+            CastingSpellVignette.gameObject.SetActive(false);
+        }
     }
 
     public void OnUpgrade()
     {
         _gameplayController.UpgradeVertex(_gameplayController.SelectedVertexA);
+    }
+
+    public void OnOffensiveSpellButton()
+    {
+        if (_gameplayController.Mana[0] >= 100)
+        {
+            _gameplayController.SetSpellToCast(0);
+        }
+        else
+        {
+            Debug.Log("Insufficient mana");
+        }
+    }   
+        
+    public void OnEarthquakeSpellButton()
+    {
+        if (_gameplayController.Mana[0] >= 300)
+        {
+            _gameplayController.SetSpellToCast(1);
+        }
+        else
+        {
+            Debug.Log("Insufficient mana");
+        }
+    }   
+        
+    public void OnTakeoverSpellButton()
+    {   
+        if (_gameplayController.Mana[0] >= 500)
+        {
+            _gameplayController.SetSpellToCast(2);
+        }
+        else
+        {
+            Debug.Log("Insufficient mana");
+        }
     }
 }
