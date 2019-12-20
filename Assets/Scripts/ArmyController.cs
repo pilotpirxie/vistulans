@@ -27,6 +27,16 @@ public class ArmyController : MonoBehaviour
         if (_targetObject == null)
         {
             UpdateTarget(Target);
+
+            switch(Owner)
+            {
+                case OwnerType.EnemyOne:
+                    gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+                    break;
+                case OwnerType.Player:
+                    gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
+                    break;
+            }
         }
         else
         {

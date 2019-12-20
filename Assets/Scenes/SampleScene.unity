@@ -358,7 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UpgradeButton: {fileID: 1472359017}
   SpellOffensive: {fileID: 37918646}
-  SpellTeleport: {fileID: 474201431}
+  SpellEarthquake: {fileID: 474201431}
   SpellTakeover: {fileID: 1889276948}
   UpgradeCostText: {fileID: 732291830}
   HoneyText: {fileID: 1276264074}
@@ -1510,7 +1510,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 115922683}
-        m_MethodName: OnTeleportSpellButton
+        m_MethodName: OnEarthquakeSpellButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
