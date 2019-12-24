@@ -33,6 +33,10 @@ public class GameplayController : MonoBehaviour
     /// </summary>
     public int SpellToCast = -1;
 
+    public bool IsShowingMenu = false;
+
+    public float GameplaySpeedMultiplier = 1.0f;
+
     void Start()
     {
         Mana = new int[] { 0, 0, 0, 0 };

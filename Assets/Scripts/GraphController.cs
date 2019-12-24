@@ -77,11 +77,10 @@ public class GraphController : MonoBehaviour
                 {
                     if (selectedVertex.GetComponent<VertexController>().ArmyPower > 1 && _gameplayController.SpellToCast == -1)
                     {
-                        int armyPowerToSend = (int)Mathf.Floor(selectedVertex.GetComponent<VertexController>().ArmyPower * _gameplayController.TransportPart);
-                        selectedVertex.GetComponent<VertexController>().ArmyPower -= armyPowerToSend;
+                        int armyPowerToSend = (int)Mathf.Floor((selectedVertex.GetComponent<VertexController>().ArmyPower - 1) * _gameplayController.TransportPart);
 
                         SendArmy(_gameplayController.SelectedVertexA.Id, _gameplayController.SelectedVertexB.Id, armyPowerToSend);
-                        Debug.Log($"Sent unit from {_gameplayController.SelectedVertexA.Id} to {_gameplayController.SelectedVertexB.Id}");
+                        Debug.Log($"Sent unit from {_gameplayController.SelectedVertexA.Id} to {_gameplayController.SelectedVertexB.Id} with {armyPowerToSend} army power");
                     }
                 }
             }
@@ -108,6 +107,7 @@ public class GraphController : MonoBehaviour
 
         if (vertexA.GetComponent<VertexController>().ArmyPower >= amount)
         {
+            vertexA.GetComponent<VertexController>().ArmyPower -= amount;
             Vector3 spawnPosition = vertexA.gameObject.transform.position;
             spawnPosition.y = 0.25f;
             GameObject newArmy = GameObject.Instantiate(ArmyObject, spawnPosition, Quaternion.identity);
