@@ -26,14 +26,14 @@ public class BadgeController : MonoBehaviour
             LevelText.GetComponent<TextMeshProUGUI>().text = $"Lv. {Level}";
         }
 
-        if (LevelText.GetComponent<TextMeshProUGUI>().text != $"{ArmyPower}")
+        if (LevelText.GetComponent<TextMeshProUGUI>().text != ArmyPower.ToString())
         {
-            PowerText.GetComponent<TextMeshProUGUI>().text = $"{ArmyPower}";
+            PowerText.GetComponent<TextMeshProUGUI>().text = ArmyPower.ToString();
         }
 
-        if (LevelText.GetComponent<TextMeshProUGUI>().text != $"{Type.ToString()[0]}")
+        if (LevelText.GetComponent<TextMeshProUGUI>().text != Type.ToString()[0].ToString())
         {
-            TypeText.GetComponent<TextMeshProUGUI>().text = $"{Type.ToString()[0]}";
+            TypeText.GetComponent<TextMeshProUGUI>().text = Type.ToString()[0].ToString();
         }
 
         switch (Owner)

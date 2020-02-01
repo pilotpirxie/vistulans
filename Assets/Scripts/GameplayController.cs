@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GameplayController : MonoBehaviour
@@ -18,12 +17,26 @@ public class GameplayController : MonoBehaviour
     [SerializeField]
     private List<VertexController> _vertexList;
 
+    /// <summary>
+    /// First and second vertices
+    /// </summary>
     public VertexController SelectedVertexA;
     public VertexController SelectedVertexB;
 
+    /// <summary>
+    /// Reference to Graph Controller in Mechanism object
+    /// </summary>
     public GraphController _graphController;
 
+    /// <summary>
+    /// Part of total army power to send from vertex A to B
+    /// </summary>
     public float TransportPart = 0.5f;
+
+    /// <summary>
+    /// Used for Time scale in UI Controller
+    /// </summary>
+    public float GameplaySpeedMultiplier = 1.0f;
 
     /// <summary>
     /// -1 = none
@@ -33,15 +46,16 @@ public class GameplayController : MonoBehaviour
     /// </summary>
     public int SpellToCast = -1;
 
+    /// <summary>
+    /// Is howing pause menu or not
+    /// </summary>
     public bool IsShowingMenu = false;
-
-    public float GameplaySpeedMultiplier = 1.0f;
 
     void Start()
     {
-        Mana = new int[] { 0, 0, 0, 0 };
-        Honey = new int[] { 0, 0, 0, 0 }; 
-        Army = new int[] { 0, 0, 0, 0 };
+        Mana = new int[] { 0, 0, 0, 0, 0 };
+        Honey = new int[] { 0, 0, 0, 0, 0 }; 
+        Army = new int[] { 0, 0, 0, 0, 0 };
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Vertex"))
         {
@@ -53,6 +67,28 @@ public class GameplayController : MonoBehaviour
         _graphController = gameObject.GetComponent<GraphController>();
     }
 
+    public void FixedUpdate()
+    {
+        CastPlayerSpell();
+        SetTimeScale();
+    }
+
+    /// <summary>
+    /// Check if current time scale is different for expected
+    /// and set new one based on choosen by player
+    /// </summary>
+    void SetTimeScale()
+    {
+        if (Time.timeScale != GameplaySpeedMultiplier)
+        {
+            Time.timeScale = GameplaySpeedMultiplier;
+        }
+    }
+
+    /// <summary>
+    /// Increase Mana and Honey
+    /// Recalculate Army power 
+    /// </summary>
     void IncreaseUnits()
     {
         for (int i = 0; i < Army.Length; i++)
@@ -62,42 +98,43 @@ public class GameplayController : MonoBehaviour
 
         foreach (VertexController vertex in _vertexList)
         {
-            if (vertex.Owner != OwnerType.Wild)
+            switch (vertex.Type)
             {
-                switch (vertex.Type)
-                {
-                    case VertexType.Shrine:
-                        Mana[(int)vertex.Owner - 1] += vertex.Level;
-                        break;
-                    case VertexType.Village:
-                        vertex.ArmyPower += vertex.Level;
-                        Army[(int)vertex.Owner - 1] += vertex.ArmyPower;
-                        break;
-                    case VertexType.Apiary:
-                        Honey[(int)vertex.Owner - 1] += vertex.Level;
-                        break;
-                }
+                case VertexType.Shrine:
+                    Mana[(int)vertex.Owner] += vertex.Level;
+                    break;
+                case VertexType.Village:
+                    vertex.ArmyPower += vertex.Level;
+                    Army[(int)vertex.Owner] += vertex.ArmyPower;
+                    break;
+                case VertexType.Apiary:
+                    Honey[(int)vertex.Owner] += vertex.Level;
+                    break;
             }
         }
     }
 
-    public void FixedUpdate()
+    /// <summary>
+    /// Check if player selects spell and first vertex (vertex to affect by spell)
+    /// And cast spell then substract mana
+    /// </summary>
+    void CastPlayerSpell()
     {
         if (SelectedVertexA != null && SelectedVertexB == null && SpellToCast != -1)
         {
-            switch(SpellToCast)
+            switch (SpellToCast)
             {
                 case 0:
                     CastOffensiveSpell(SelectedVertexA);
-                    Mana[0] -= 100;
+                    Mana[1] -= 100;
                     break;
                 case 1:
                     CastEarthquakeSpell(SelectedVertexA);
-                    Mana[0] -= 300;
+                    Mana[1] -= 300;
                     break;
                 case 2:
                     CastTakeoverCast(SelectedVertexA, OwnerType.Player);
-                    Mana[0] -= 500;
+                    Mana[1] -= 500;
                     break;
             }
 
@@ -106,20 +143,29 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if owner of vertex has sufficient amount of honey
+    /// Then upgrade or not vertex by increasing vertex level
+    /// </summary>
+    /// <param name="vertex">Vertex to upgrade</param>
     public void UpgradeVertex(VertexController vertex)
     {
-        if (vertex.Level < 5 && Honey[(int)vertex.Owner-1] >= vertex.Level * 25)
+        if (vertex.Level < 5 && Honey[(int)vertex.Owner] >= vertex.Level * 25)
         {
-            Honey[(int)vertex.Owner - 1] -= vertex.Level * 25;
+            Honey[(int)vertex.Owner] -= vertex.Level * 25;
             vertex.Level++;
         }
     }
-
-    public void SetSpellToCast(int spellIndex = -1)
+    
+    /// <summary>
+    /// Set index of spell from UI Controller if player has sufficient amount of mana
+    /// </summary>
+    /// <param name="spellIndex">Index of spell</param>
+    public void SetSpellToCastByPlayer(int spellIndex = -1)
     {
-        if (spellIndex == 0 && Mana[0] >= 100
-            || spellIndex == 1 && Mana[0] >= 300
-            || spellIndex == 2 && Mana[0] >= 500)
+        if (spellIndex == 0 && Mana[1] >= 100
+            || spellIndex == 1 && Mana[1] >= 300
+            || spellIndex == 2 && Mana[1] >= 500)
         {
             if (spellIndex == SpellToCast)
             {
@@ -138,6 +184,10 @@ public class GameplayController : MonoBehaviour
         _graphController.ClearSelection();
     }
 
+    /// <summary>
+    /// Remove 100 army power for choosen vertex
+    /// </summary>
+    /// <param name="vertex"></param>
     public void CastOffensiveSpell(VertexController vertex)
     {
         vertex.ArmyPower -= 100;
@@ -148,6 +198,10 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Substract 50 army power from each vertex of vertex owner
+    /// </summary>
+    /// <param name="vertex"></param>
     public void CastEarthquakeSpell(VertexController vertex)
     {
         foreach (VertexController tempVertex in _vertexList)
@@ -164,6 +218,12 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Substract half of the army power from vertex
+    /// And change owner to the spell caster
+    /// </summary>
+    /// <param name="vertex"></param>
+    /// <param name="whoCast"></param>
     public void CastTakeoverCast(VertexController vertex, OwnerType whoCast)
     {
         vertex.ArmyPower -= (int)Mathf.Floor(vertex.ArmyPower * 0.5f);

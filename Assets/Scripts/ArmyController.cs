@@ -2,9 +2,9 @@
 
 public class ArmyController : MonoBehaviour
 {
-    public int Origin = -1;
+    public int OriginVertexIndexId = -1;
 
-    public int Target = -1;
+    public int TargetVertexIndexId = -1;
 
     private GameObject _targetObject;
 
@@ -18,20 +18,26 @@ public class ArmyController : MonoBehaviour
 
     void UpdateTarget(int newTarget)
     {
-        Target = newTarget;
-        _targetObject = GameObject.Find($"vertex{Target}");
+        TargetVertexIndexId = newTarget;
+        _targetObject = GameObject.Find($"vertex{TargetVertexIndexId}");
     }
 
     void FixedUpdate()
     {
         if (_targetObject == null)
         {
-            UpdateTarget(Target);
+            UpdateTarget(TargetVertexIndexId);
 
             switch(Owner)
             {
                 case OwnerType.EnemyOne:
                     gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+                    break;
+                case OwnerType.EnemyTwo:
+                    gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
+                    break;
+                case OwnerType.EnemyThree:
+                    gameObject.GetComponent<MeshRenderer>().material.color = Color.gray;
                     break;
                 case OwnerType.Player:
                     gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
@@ -61,7 +67,7 @@ public class ArmyController : MonoBehaviour
         {
             if (other.gameObject.tag == "Vertex")
             {
-                if (other.gameObject.GetComponent<VertexController>().Id != Origin)
+                if (other.gameObject.GetComponent<VertexController>().Id != OriginVertexIndexId)
                 {
                     if (other.gameObject.GetComponent<VertexController>().Owner == Owner)
                     {
@@ -78,7 +84,7 @@ public class ArmyController : MonoBehaviour
                         }
                     }
 
-                    GameObject.Destroy(gameObject);
+                    Destroy(gameObject);
                 }
             }
             else if (other.gameObject.tag == "Army")
@@ -91,19 +97,19 @@ public class ArmyController : MonoBehaviour
                     {
                         ArmyPower -= other.gameObject.GetComponent<ArmyController>().ArmyPower;
 
-                        GameObject.Destroy(other.gameObject);
+                        Destroy(other.gameObject);
 
                     }
                     else if (other.gameObject.GetComponent<ArmyController>().ArmyPower > ArmyPower)
                     {
                         other.gameObject.GetComponent<ArmyController>().ArmyPower -= ArmyPower;
 
-                        GameObject.Destroy(gameObject);
+                        Destroy(gameObject);
                     }
                     else
                     {
-                        GameObject.Destroy(gameObject);
-                        GameObject.Destroy(other.gameObject);
+                        Destroy(gameObject);
+                        Destroy(other.gameObject);
                     }
                 }
             }
