@@ -26,47 +26,56 @@ public class BadgeController : MonoBehaviour
     /// <summary>
     /// Label with level
     /// </summary>
-    public TextMeshProUGUI LevelText;
+    [SerializeField]
+    TextMeshProUGUI _levelText;
 
     /// <summary>
     /// Label with army power 
     /// </summary>
-    public TextMeshProUGUI ArmyPowerText;
+    [SerializeField]
+    TextMeshProUGUI _armyPowerText;
 
     /// <summary>
     /// Label with vertex type
     /// </summary>
-    public TextMeshProUGUI TypeText;
+    [SerializeField]
+    TextMeshProUGUI _typeText;
 
     /// <summary>
     /// Sprite with background image
     /// </summary>
-    public SpriteRenderer Background;
+    [SerializeField]
+    SpriteRenderer _background;
 
     /// <summary>
     /// Prefab of image used for wild owner type
     /// </summary>
-    public Sprite WildBackground;
+    [SerializeField]
+    Sprite _wildBackground;
 
     /// <summary>
     /// Prefab of image used for player owner
     /// </summary>
-    public Sprite PlayerBackground;
+    [SerializeField]
+    Sprite _playerBackground;
 
     /// <summary>
     /// Prefab of image used for first enemy owner
     /// </summary>
-    public Sprite EnemyOneBackground;
+    [SerializeField]
+    Sprite _enemyOneBackground;
 
     /// <summary>
     /// Prefab of image used for second enemy owner
     /// </summary>
-    public Sprite EnemyTwoBackground;
+    [SerializeField]
+    Sprite _enemyTwoBackground;
 
     /// <summary>
     /// Prefab of image used for third enemy owner
     /// </summary>
-    public Sprite EnemyThreeBackground;
+    [SerializeField]
+    Sprite _enemyThreeBackground;
 
     private void FixedUpdate()
     {
@@ -79,19 +88,19 @@ public class BadgeController : MonoBehaviour
     /// </summary>
     void SetLabels()
     {
-        if (TypeText.text != $"Lv. {Level}")
+        if (_typeText.text != $"Lv. {Level}")
         {
-            TypeText.text = $"Lv. {Level}";
+            _typeText.text = $"Lv. {Level}";
         }
 
-        if (ArmyPowerText.text != ArmyPower.ToString())
+        if (_armyPowerText.text != ArmyPower.ToString())
         {
-            ArmyPowerText.text = ArmyPower.ToString();
+            _armyPowerText.text = ArmyPower.ToString();
         }
 
-        if (TypeText.text != Type.ToString()[0].ToString())
+        if (_typeText.text != Type.ToString()[0].ToString())
         {
-            TypeText.text = Type.ToString()[0].ToString();
+            _typeText.text = Type.ToString()[0].ToString();
         }
     }
 
@@ -103,19 +112,19 @@ public class BadgeController : MonoBehaviour
         switch (Owner)
         {
             case OwnerType.Wild:
-                Background.sprite = WildBackground;
+                _background.sprite = _wildBackground;
                 break;
             case OwnerType.Player:
-                Background.sprite = PlayerBackground;
+                _background.sprite = _playerBackground;
                 break;
             case OwnerType.EnemyOne:
-                Background.sprite = EnemyOneBackground;
+                _background.sprite = _enemyOneBackground;
                 break;
             case OwnerType.EnemyTwo:
-                Background.sprite = EnemyTwoBackground;
+                _background.sprite = _enemyTwoBackground;
                 break;
             case OwnerType.EnemyThree:
-                Background.sprite = EnemyThreeBackground;
+                _background.sprite = _enemyThreeBackground;
                 break;
         }
     }

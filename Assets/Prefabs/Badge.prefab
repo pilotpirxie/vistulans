@@ -800,13 +800,15 @@ MonoBehaviour:
   ArmyPower: 0
   Type: 0
   Owner: 0
-  LevelText: {fileID: 8578020111109871227}
-  ArmyPowerText: {fileID: 8578020110392023819}
-  TypeText: {fileID: 8578020110847836554}
-  Background: {fileID: 8578020111151718889}
-  WildBackground: {fileID: 21300000, guid: 2aec1eb9755a48c4a874f01e8e3c09f4, type: 3}
-  PlayerBackground: {fileID: 21300000, guid: 113414d8c9df4a34996638675d8c0500, type: 3}
-  EnemyOneBackground: {fileID: 21300000, guid: a8d6731c4d47f314faa79445e0e26106, type: 3}
-  EnemyTwoBackground: {fileID: 21300000, guid: 8a6b69c06cbb8934db511502367d8ea0, type: 3}
-  EnemyThreeBackground: {fileID: 21300000, guid: 32846afc4d363744c9da327b35a8f66e,
+  _levelText: {fileID: 8578020111109871227}
+  _armyPowerText: {fileID: 8578020110392023819}
+  _typeText: {fileID: 8578020110847836554}
+  _background: {fileID: 8578020111151718889}
+  _wildBackground: {fileID: 21300000, guid: 2aec1eb9755a48c4a874f01e8e3c09f4, type: 3}
+  _playerBackground: {fileID: 21300000, guid: 113414d8c9df4a34996638675d8c0500, type: 3}
+  _enemyOneBackground: {fileID: 21300000, guid: a8d6731c4d47f314faa79445e0e26106,
+    type: 3}
+  _enemyTwoBackground: {fileID: 21300000, guid: 8a6b69c06cbb8934db511502367d8ea0,
+    type: 3}
+  _enemyThreeBackground: {fileID: 21300000, guid: 32846afc4d363744c9da327b35a8f66e,
     type: 3}
