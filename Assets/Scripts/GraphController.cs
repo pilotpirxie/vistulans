@@ -2,36 +2,58 @@
 
 public class GraphController : MonoBehaviour
 {
+    /// <summary>
+    /// Object used on instatiating vertices at start
+    /// </summary>
     [SerializeField]
-    public GameObject VertexObject;
+    public GameObject VertexObjectPrefab;
 
+    /// <summary>
+    /// Object used on instantiating when player choose two
+    /// vertices and send army between them
+    /// </summary>
     [SerializeField]
-    public GameObject ArmyObject;
+    public GameObject ArmyObjectPrefab;
 
-    private GameplayController _gameplayController;
+    /// <summary>
+    /// Reference to gameplay controller from Mechanism object
+    /// </summary>
+    GameplayController _gameplayController;
 
     void Start()
     {
         _gameplayController = GameObject.FindWithTag("Mechanism").GetComponent<GameplayController>();
 
+        // Load JSON and parse it
         TextAsset levelConfigContent = Resources.Load<TextAsset>("Config/levels");
-        Debug.Log($"Loaded level configuration: {levelConfigContent}");
         LevelConfig levelConfig = JsonUtility.FromJson<LevelConfig>(levelConfigContent.text);
 
+        // Instantiate vertex for every entry in the LevelConfig
         foreach (VertexConfig vertexConfig in levelConfig.levels[0].verticies)
         {
-            GameObject newVertex = GameObject.Instantiate(VertexObject, new Vector3(vertexConfig.x * 1f, 0.5f, -vertexConfig.y * 1f), Quaternion.identity);
-            newVertex.GetComponent<VertexController>().X = vertexConfig.x;
-            newVertex.GetComponent<VertexController>().Y = vertexConfig.y;
-            newVertex.GetComponent<VertexController>().Owner = (OwnerType)vertexConfig.owner;
-            newVertex.GetComponent<VertexController>().Type = (VertexType)vertexConfig.type;
-            newVertex.GetComponent<VertexController>().ArmyPower = vertexConfig.power;
-            newVertex.GetComponent<VertexController>().Level = vertexConfig.level;
-            newVertex.GetComponent<VertexController>().Id = vertexConfig.id;
+            // Instantiate and set position based on coordinates
+            GameObject newVertex = Instantiate(VertexObjectPrefab, new Vector3(vertexConfig.x * 1f, 0.5f, -vertexConfig.y * 1f), Quaternion.identity);
+
+            // Get vertex controller from new vertex
+            VertexController vertexController = newVertex.GetComponent<VertexController>();
+
+            // And set values based on Vertex Config from Level Config
+            vertexController.Id = vertexConfig.id;
+            vertexController.X = vertexConfig.x;
+            vertexController.Y = vertexConfig.y;
+
+            vertexController.Owner = (OwnerType)vertexConfig.owner;
+            vertexController.Type = (VertexType)vertexConfig.type;
+
+            vertexController.ArmyPower = vertexConfig.power;
+            vertexController.Level = vertexConfig.level;
+
+            // Set meta-data, name and tag name used for future identifying vertex
             newVertex.tag = "Vertex";
             newVertex.name = $"vertex{vertexConfig.id}";
         }
 
+        // Set edges between vertices
         foreach (EdgeConfig connection in levelConfig.levels[0].edges)
         {
             GameObject vertexA = GameObject.Find($"vertex{connection.a}");
@@ -42,6 +64,17 @@ public class GraphController : MonoBehaviour
         }
     }
 
+    public void FixedUpdate()
+    {
+        HighlightVertices();
+        CheckIfSendArmy();
+    }
+
+    /// <summary>
+    /// Triggered when player touch the vertex
+    /// Set selected first or second vertex
+    /// </summary>
+    /// <param name="id"></param>
     public void OnVertexTouch(int id)
     {
         if (_gameplayController.SelectedVertexA == null)
@@ -54,7 +87,11 @@ public class GraphController : MonoBehaviour
         }
     }
 
-    public void FixedUpdate()
+    /// <summary>
+    /// If only one vertex is selected highlight selected by player vertex
+    /// and each vertex connected to it 
+    /// </summary>
+    void HighlightVertices()
     {
         if (_gameplayController.SelectedVertexA != null && _gameplayController.SelectedVertexB == null)
         {
@@ -66,29 +103,51 @@ public class GraphController : MonoBehaviour
                 connectedVertex.GetComponent<Renderer>().material.color = Color.yellow;
             }
         }
+    }
 
+    /// <summary>
+    /// Check if player selected two vertices
+    /// and they are connected to each other
+    /// and has army power higher than 1
+    /// and spell to cast is not selected
+    /// then send army from A to B
+    /// and clear selection
+    /// </summary>
+    void CheckIfSendArmy()
+    {
+        // Check if both vertices are selected
         if (_gameplayController.SelectedVertexA != null && _gameplayController.SelectedVertexB != null)
         {
-            GameObject selectedVertex = GameObject.Find($"vertex{_gameplayController.SelectedVertexA.Id}");
+            // Get first vertex
+            GameObject firstVertex = GameObject.Find($"vertex{_gameplayController.SelectedVertexA.Id}");
 
-            foreach (GameObject possibleVertex in selectedVertex.GetComponent<VertexController>().Connections)
+            // Check if second vertex is connected to the first one
+            foreach (GameObject connectedVertex in firstVertex.GetComponent<VertexController>().Connections)
             {
-                if (possibleVertex.GetComponent<VertexController>().Id == _gameplayController.SelectedVertexB.Id)
+                if (connectedVertex.GetComponent<VertexController>().Id == _gameplayController.SelectedVertexB.Id)
                 {
-                    if (selectedVertex.GetComponent<VertexController>().ArmyPower > 1 && _gameplayController.SpellToCast == -1)
+                    // Check if firstVertex has more than 1 army power to split, you cannot send last unit
+                    if (firstVertex.GetComponent<VertexController>().ArmyPower > 1 && _gameplayController.SpellToCast == -1)
                     {
-                        int armyPowerToSend = (int)Mathf.Floor((selectedVertex.GetComponent<VertexController>().ArmyPower - 1) * _gameplayController.TransportPart);
+                        // Calculate how many army power units are going to be send based on transport part
+                        // Floor((total - 1) * transportPart) casted to Int
+                        int armyPowerToSend = (int)Mathf.Floor((firstVertex.GetComponent<VertexController>().ArmyPower - 1) * _gameplayController.TransportPart);
 
+                        // Send signal to send army from vertex A to B with amount of units calculated above
                         SendArmy(_gameplayController.SelectedVertexA.Id, _gameplayController.SelectedVertexB.Id, armyPowerToSend);
                         Debug.Log($"Sent unit from {_gameplayController.SelectedVertexA.Id} to {_gameplayController.SelectedVertexB.Id} with {armyPowerToSend} army power");
                     }
                 }
             }
 
+            // Clear highlights from vertices
             ClearSelection();
         }
     }
 
+    /// <summary>
+    /// Hide highlights from every vertex
+    /// </summary>
     public void ClearSelection()
     {
         foreach (GameObject vertex in GameObject.FindGameObjectsWithTag("Vertex"))
@@ -100,25 +159,35 @@ public class GraphController : MonoBehaviour
         _gameplayController.SelectedVertexB = null;
     }
 
+    /// <summary>
+    /// Instantiate army object and send it from origin to target
+    /// </summary>
+    /// <param name="origin">Vertex A</param>
+    /// <param name="target">Vertex B</param>
+    /// <param name="amount">Army power to send</param>
     public void SendArmy(int origin, int target, int amount)
     {
         GameObject vertexA = GameObject.Find($"vertex{origin}");
-        GameObject vertexB = GameObject.Find($"vertex{target}");
+        VertexController originVertexController = vertexA.GetComponent<VertexController>();
 
-        if (vertexA.GetComponent<VertexController>().ArmyPower >= amount)
+        if (originVertexController.ArmyPower >= amount)
         {
-            vertexA.GetComponent<VertexController>().ArmyPower -= amount;
+            // Substract army power from the origin
+            originVertexController.ArmyPower -= amount;
+
+            // Position for new army object
             Vector3 spawnPosition = vertexA.gameObject.transform.position;
             spawnPosition.y = 0.25f;
-            GameObject newArmy = GameObject.Instantiate(ArmyObject, spawnPosition, Quaternion.identity);
-            newArmy.GetComponent<ArmyController>().Owner = vertexA.GetComponent<VertexController>().Owner;
-            newArmy.GetComponent<ArmyController>().ArmyPower = amount;
-            newArmy.GetComponent<ArmyController>().Origin = origin;
-            newArmy.GetComponent<ArmyController>().Target = target;
-        }
-        else
-        {
-            // insufficient army power
+
+            // Instantiate army object
+            GameObject newArmy = Instantiate(ArmyObjectPrefab, spawnPosition, Quaternion.identity);
+            ArmyController armyController = newArmy.GetComponent<ArmyController>();
+
+            // Set army controller data
+            armyController.Owner = originVertexController.Owner;
+            armyController.ArmyPower = amount;
+            armyController.OriginVertexIndexId = origin;
+            armyController.TargetVertexIndexId = target;
         }
     }
 }
