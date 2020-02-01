@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Type of vertex, represents what vertex produces
+/// </summary>
 public enum VertexType
 {
     Village,
@@ -8,6 +11,9 @@ public enum VertexType
     Apiary
 };
 
+/// <summary>
+/// Owner of vertex
+/// </summary>
 public enum OwnerType
 {
     Wild,
@@ -19,33 +25,77 @@ public enum OwnerType
 
 public class VertexController : MonoBehaviour
 {
+    /// <summary>
+    /// Object of badge used for instantiating
+    /// </summary>
+    public GameObject BadgeObjectPrefab;
 
-    public GameObject BadgeObject;
-    private GameObject _badgeObject;
+    /// <summary>
+    /// Reference to badge controller for this vertex
+    /// </summary>
+    private BadgeController _badgeController;
+
+    /// <summary>
+    /// Reference to mechanism object
+    /// </summary>
     private GameObject _mechanismObject;
 
+    /// <summary>
+    /// Id of vertex, used for comparing and name
+    /// </summary>
     public int Id;
 
+    /// <summary>
+    /// Type of vertex
+    /// </summary>
     public VertexType Type;
 
+    /// <summary>
+    /// X coordinate
+    /// </summary>
     public int X;
 
+    /// <summary>
+    /// Y coordinate
+    /// </summary>
     public int Y;
 
+    /// <summary>
+    /// How fast vertex produce goods
+    /// </summary>
     public int Level;
 
+    /// <summary>
+    /// List of connections (edges) to other vertices
+    /// </summary>
     public List<GameObject> Connections;
 
+    /// <summary>
+    /// How many army units stay in the vertex
+    /// </summary>
     public int ArmyPower;
 
+    /// <summary>
+    /// Determine who owns the vertex
+    /// </summary>
     public OwnerType Owner;
 
+    /// <summary>
+    /// Flag, is vertex selected or not
+    /// </summary>
     [SerializeField]
-    private bool _selected = false;
+    public bool Selected = false;
+
+    /// <summary>
+    /// Flag, is vertex highlighted or not
+    /// </summary>
+    [SerializeField]
+    public bool Highlighted = false;
 
     void Start()
     {
-        _badgeObject = GameObject.Instantiate(BadgeObject, gameObject.transform.position - new Vector3(0, 1f, 2f), Quaternion.identity);
+        GameObject newBadge = GameObject.Instantiate(BadgeObjectPrefab, gameObject.transform.position - new Vector3(0, 1f, 2f), Quaternion.identity);
+        _badgeController = newBadge.GetComponent<BadgeController>();
 
         if (_mechanismObject == null)
         {
@@ -55,12 +105,23 @@ public class VertexController : MonoBehaviour
 
     void FixedUpdate()
     {
-        _badgeObject.GetComponent<BadgeController>().Level = Level;
-        _badgeObject.GetComponent<BadgeController>().ArmyPower = ArmyPower;
-        _badgeObject.GetComponent<BadgeController>().Type = Type;
-        _badgeObject.GetComponent<BadgeController>().Owner = Owner;
+        UpdateBadgeUI();
     }
 
+    /// <summary>
+    /// Set new values for badge
+    /// </summary>
+    void UpdateBadgeUI()
+    {
+        _badgeController.Level = Level;
+        _badgeController.ArmyPower = ArmyPower;
+        _badgeController.Type = Type;
+        _badgeController.Owner = Owner;
+    }
+
+    /// <summary>
+    /// Call graph controller when player touch or click on vertex
+    /// </summary>
     private void OnMouseDown()
     {
         _mechanismObject.GetComponent<GraphController>().OnVertexTouch(gameObject.GetComponent<VertexController>().Id);

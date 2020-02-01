@@ -66,7 +66,7 @@ public class GraphController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        HighlightVertices();
+        SelectVertices();
         CheckIfSendArmy();
     }
 
@@ -84,24 +84,6 @@ public class GraphController : MonoBehaviour
         else
         {
             _gameplayController.SelectedVertexB = GameObject.Find($"vertex{id}").GetComponent<VertexController>();
-        }
-    }
-
-    /// <summary>
-    /// If only one vertex is selected highlight selected by player vertex
-    /// and each vertex connected to it 
-    /// </summary>
-    void HighlightVertices()
-    {
-        if (_gameplayController.SelectedVertexA != null && _gameplayController.SelectedVertexB == null)
-        {
-            GameObject selectedVertex = GameObject.Find($"vertex{_gameplayController.SelectedVertexA.Id}");
-            selectedVertex.GetComponent<Renderer>().material.color = Color.white;
-
-            foreach (GameObject connectedVertex in selectedVertex.GetComponent<VertexController>().Connections)
-            {
-                connectedVertex.GetComponent<Renderer>().material.color = Color.yellow;
-            }
         }
     }
 
@@ -146,13 +128,32 @@ public class GraphController : MonoBehaviour
     }
 
     /// <summary>
+    /// If only one vertex is selected highlight selected by player vertex
+    /// and each vertex connected to it 
+    /// </summary>
+    void SelectVertices()
+    {
+        if (_gameplayController.SelectedVertexA != null && _gameplayController.SelectedVertexB == null)
+        {
+            GameObject selectedVertex = GameObject.Find($"vertex{_gameplayController.SelectedVertexA.Id}");
+            selectedVertex.GetComponent<VertexController>().Selected = true;
+
+            foreach (GameObject connectedVertex in selectedVertex.GetComponent<VertexController>().Connections)
+            {
+                connectedVertex.GetComponent<VertexController>().Highlighted = true;
+            }
+        }
+    }
+
+    /// <summary>
     /// Hide highlights from every vertex
     /// </summary>
     public void ClearSelection()
     {
         foreach (GameObject vertex in GameObject.FindGameObjectsWithTag("Vertex"))
         {
-            vertex.GetComponent<Renderer>().material.color = Color.clear;
+            vertex.GetComponent<VertexController>().Selected = false;
+            vertex.GetComponent<VertexController>().Highlighted = false;
         }
 
         _gameplayController.SelectedVertexA = null;

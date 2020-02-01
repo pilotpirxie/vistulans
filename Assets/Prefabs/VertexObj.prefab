@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a47efcfb3dfa59347bd37a52f03e2119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BadgeObject: {fileID: 8578020111256311284, guid: 825fcdf998dc6134eb4f6ffd820b2c03,
+  BadgeObjectPrefab: {fileID: 8578020111256311284, guid: 825fcdf998dc6134eb4f6ffd820b2c03,
     type: 3}
   Id: 0
   Type: 0
