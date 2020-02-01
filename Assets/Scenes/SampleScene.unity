@@ -291,9 +291,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a188bd9bcf3a448892877d1dc31096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VertexObject: {fileID: 8094815627158821714, guid: 21dc69cf2f54ba84891f37681058ed51,
+  VertexObjectPrefab: {fileID: 8094815627158821714, guid: 21dc69cf2f54ba84891f37681058ed51,
     type: 3}
-  ArmyObject: {fileID: 3581865609455456488, guid: c8904c1d8460fc44796917282ca79d96,
+  ArmyObjectPrefab: {fileID: 3581865609455456488, guid: c8904c1d8460fc44796917282ca79d96,
     type: 3}
 --- !u!114 &846776719
 MonoBehaviour:
@@ -315,9 +315,9 @@ MonoBehaviour:
   SelectedVertexB: {fileID: 0}
   _graphController: {fileID: 0}
   TransportPart: 0.5
+  GameplaySpeedMultiplier: 1
   SpellToCast: -1
   IsShowingMenu: 0
-  GameplaySpeedMultiplier: 1
 --- !u!1 &1806313878
 GameObject:
   m_ObjectHideFlags: 0
