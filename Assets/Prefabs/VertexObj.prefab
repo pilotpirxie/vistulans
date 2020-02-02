@@ -118,7 +118,12 @@ MonoBehaviour:
   - {fileID: 6855731013611092042, guid: 2d236d528dce167449384a4ba3704f35, type: 3}
   - {fileID: 8648714970749345666, guid: 28aafbd92bf6a714e95415a1a3636261, type: 3}
   - {fileID: 2553557492607804647, guid: be25199fd71e4cb4bbbcdbb37fa6077b, type: 3}
-  MeshLevelsShrine: []
+  MeshLevelsShrine:
+  - {fileID: 3236985977220830040, guid: 46862603ac6e28345a8b9a8b5903afdb, type: 3}
+  - {fileID: 2540874851647029163, guid: e0a2c52a7044d624cb4fa720765acb87, type: 3}
+  - {fileID: 7132724361188249578, guid: a7e66233b82acdb44b8488502ea08cad, type: 3}
+  - {fileID: 6465954306223499067, guid: 20d4af0ce8eb5c84c9466481d49bb32c, type: 3}
+  - {fileID: 394352460345165880, guid: dc291a69e1a3c2c479391180e78131cd, type: 3}
   Id: 0
   Type: 0
   X: 0

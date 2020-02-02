@@ -112,7 +112,7 @@ public class VertexController : MonoBehaviour
 
     void Start()
     {
-        GameObject newBadge = GameObject.Instantiate(BadgeObjectPrefab, gameObject.transform.position - new Vector3(0, 1f, 2f), Quaternion.identity);
+        GameObject newBadge = GameObject.Instantiate(BadgeObjectPrefab, gameObject.transform.position - new Vector3(0.15f, 0.5f, 1.5f), Quaternion.identity);
         _badgeController = newBadge.GetComponent<BadgeController>();
 
         if (_mechanismObject == null)
@@ -138,13 +138,18 @@ public class VertexController : MonoBehaviour
             Destroy(_viewObject);
         }
 
-        switch(Type)
+        Vector3 currPos = transform.position;
+
+        switch (Type)
         {
             case VertexType.Village:
-                _viewObject = Instantiate(MeshLevelsVillage[Level - 1], transform.position, Quaternion.identity);
+                _viewObject = Instantiate(MeshLevelsVillage[Level - 1], currPos - new Vector3(0.2f, 0f, 0f), Quaternion.identity);
                 break;
             case VertexType.Apiary:
-                _viewObject = Instantiate(MeshLevelsApiary[Level - 1], transform.position, Quaternion.identity);
+                _viewObject = Instantiate(MeshLevelsApiary[Level - 1], currPos - new Vector3(0.3f, 0f, 0.5f), Quaternion.identity);
+                break;
+            case VertexType.Shrine:
+                _viewObject = Instantiate(MeshLevelsShrine[Level - 1], currPos + new Vector3(0f, -0.2f, -0.1f), Quaternion.identity);
                 break;
         }
 
