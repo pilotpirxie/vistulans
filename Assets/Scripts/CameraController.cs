@@ -71,6 +71,16 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private bool _isDragging = false;
 
+    /// <summary>
+    /// Minimum coordinates of edges for camera
+    /// </summary>
+    public Vector2 MinimumCoordinates = new Vector2(0f, 0f);
+
+    /// <summary>
+    /// Maximum coordinates of edges for camera
+    /// </summary>
+    public Vector2 MaximumCoordinates = new Vector2(0f, 0f);
+
     void Update()
     {
         // Check if is touch input,
