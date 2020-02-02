@@ -78,12 +78,16 @@ public class GameplayController : MonoBehaviour
         SetTimeScale();
     }
 
-    public void SetPositionOfSunshaft(GameObject vertex)
+    /// <summary>
+    /// Set sunshaft to vertex
+    /// </summary>
+    /// <param name="vertex">Vertex</param>
+    public void SetPositionOfSunshaft()
     {
         if (SelectedVertexA != null && SelectedVertexB == null)
         {
             SunshaftPrefab.SetActive(true);
-            SunshaftPrefab.transform.position = vertex.transform.position;
+            SunshaftPrefab.transform.position = GameObject.Find($"vertex{SelectedVertexA.Id}").transform.position;
         }
         else
         {
@@ -173,6 +177,13 @@ public class GameplayController : MonoBehaviour
             Honey[(int)vertex.Owner] -= vertex.Level * 25;
             vertex.Level++;
             vertex.SetViewObject();
+
+            if (vertex.Level == 5)
+            {
+                SelectedVertexA = null;
+                SelectedVertexB = null;
+                SetPositionOfSunshaft();
+            }
         }
     }
     

@@ -119,7 +119,7 @@ public class GraphController : MonoBehaviour
             _gameplayController.SelectedVertexB = vertex.GetComponent<VertexController>();
         }
 
-        _gameplayController.SetPositionOfSunshaft(vertex);
+        _gameplayController.SetPositionOfSunshaft();
     }
 
     /// <summary>
