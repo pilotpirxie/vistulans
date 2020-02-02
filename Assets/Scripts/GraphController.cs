@@ -108,14 +108,18 @@ public class GraphController : MonoBehaviour
     /// <param name="id"></param>
     public void OnVertexTouch(int id)
     {
+        GameObject vertex = GameObject.Find($"vertex{id}");
+
         if (_gameplayController.SelectedVertexA == null)
         {
-            _gameplayController.SelectedVertexA = GameObject.Find($"vertex{id}").GetComponent<VertexController>();
+            _gameplayController.SelectedVertexA = vertex.GetComponent<VertexController>();
         }
         else
         {
-            _gameplayController.SelectedVertexB = GameObject.Find($"vertex{id}").GetComponent<VertexController>();
+            _gameplayController.SelectedVertexB = vertex.GetComponent<VertexController>();
         }
+
+        _gameplayController.SetPositionOfSunshaft(vertex);
     }
 
     /// <summary>

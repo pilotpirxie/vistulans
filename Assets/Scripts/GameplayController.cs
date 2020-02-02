@@ -18,6 +18,11 @@ public class GameplayController : MonoBehaviour
     private List<VertexController> _vertexList;
 
     /// <summary>
+    /// Represents which vertex is actually selected
+    /// </summary>
+    public GameObject SunshaftPrefab;
+
+    /// <summary>
     /// First and second vertices
     /// </summary>
     public VertexController SelectedVertexA;
@@ -71,6 +76,19 @@ public class GameplayController : MonoBehaviour
     {
         CastPlayerSpell();
         SetTimeScale();
+    }
+
+    public void SetPositionOfSunshaft(GameObject vertex)
+    {
+        if (SelectedVertexA != null && SelectedVertexB == null)
+        {
+            SunshaftPrefab.SetActive(true);
+            SunshaftPrefab.transform.position = vertex.transform.position;
+        }
+        else
+        {
+            SunshaftPrefab.SetActive(false);
+        }
     }
 
     /// <summary>
