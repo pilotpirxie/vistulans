@@ -31,6 +31,11 @@ public class VertexController : MonoBehaviour
     public GameObject BadgeObjectPrefab;
 
     /// <summary>
+    /// White circle object displaying below mesh
+    /// </summary>
+    public GameObject WhiteCircle;
+
+    /// <summary>
     /// Meshes used for rendering villages on different levels
     /// </summary>
     public List<GameObject> MeshLevelsVillage;
@@ -114,6 +119,8 @@ public class VertexController : MonoBehaviour
     {
         GameObject newBadge = GameObject.Instantiate(BadgeObjectPrefab, gameObject.transform.position - new Vector3(0.15f, 0.5f, 1.5f), Quaternion.identity);
         _badgeController = newBadge.GetComponent<BadgeController>();
+
+        GameObject circle = GameObject.Instantiate(WhiteCircle, gameObject.transform.position - new Vector3(0, 0.45f, 0.3f), Quaternion.Euler(90, 0, 0));
 
         if (_mechanismObject == null)
         {

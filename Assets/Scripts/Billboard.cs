@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
-    void Update()
+    void FixedUpdate()
     {
         transform.rotation = Camera.main.transform.rotation;
     }
