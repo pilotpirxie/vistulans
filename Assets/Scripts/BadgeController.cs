@@ -88,9 +88,9 @@ public class BadgeController : MonoBehaviour
     /// </summary>
     void SetLabels()
     {
-        if (_typeText.text != $"Lv. {Level}")
+        if (_levelText.text != $"Lv. {Level}")
         {
-            _typeText.text = $"Lv. {Level}";
+            _levelText.text = $"Lv. {Level}";
         }
 
         if (_armyPowerText.text != ArmyPower.ToString())

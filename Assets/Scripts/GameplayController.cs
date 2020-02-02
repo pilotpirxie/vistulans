@@ -154,6 +154,7 @@ public class GameplayController : MonoBehaviour
         {
             Honey[(int)vertex.Owner] -= vertex.Level * 25;
             vertex.Level++;
+            vertex.SetViewObject();
         }
     }
     

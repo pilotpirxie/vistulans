@@ -31,6 +31,26 @@ public class VertexController : MonoBehaviour
     public GameObject BadgeObjectPrefab;
 
     /// <summary>
+    /// Meshes used for rendering villages on different levels
+    /// </summary>
+    public List<GameObject> MeshLevelsVillage;
+
+    /// <summary>
+    /// Meshes used for rendering apiary on different levels
+    /// </summary>
+    public List<GameObject> MeshLevelsApiary;
+
+    /// <summary>
+    /// Meshes used for rendering shrines on different levels
+    /// </summary>
+    public List<GameObject> MeshLevelsShrine;
+
+    /// <summary>
+    /// Object actually rendered
+    /// </summary>
+    private GameObject _viewObject;
+
+    /// <summary>
     /// Reference to badge controller for this vertex
     /// </summary>
     private BadgeController _badgeController;
@@ -83,13 +103,11 @@ public class VertexController : MonoBehaviour
     /// <summary>
     /// Flag, is vertex selected or not
     /// </summary>
-    [SerializeField]
     public bool Selected = false;
 
     /// <summary>
     /// Flag, is vertex highlighted or not
     /// </summary>
-    [SerializeField]
     public bool Highlighted = false;
 
     void Start()
@@ -101,11 +119,39 @@ public class VertexController : MonoBehaviour
         {
             _mechanismObject = GameObject.Find("Mechanism");
         }
+
+        SetViewObject();
     }
 
     void FixedUpdate()
     {
         UpdateBadgeUI();
+    }
+
+    /// <summary>
+    /// Set new view object
+    /// </summary>
+    public void SetViewObject()
+    {
+        if (_viewObject != null)
+        {
+            Destroy(_viewObject);
+        }
+
+        switch(Type)
+        {
+            case VertexType.Village:
+                _viewObject = Instantiate(MeshLevelsVillage[Level - 1], transform.position, Quaternion.identity);
+                break;
+            case VertexType.Apiary:
+                _viewObject = Instantiate(MeshLevelsApiary[Level - 1], transform.position, Quaternion.identity);
+                break;
+        }
+
+        if (_viewObject != null)
+        {
+            _viewObject.transform.parent = gameObject.transform.parent;
+        }
     }
 
     /// <summary>

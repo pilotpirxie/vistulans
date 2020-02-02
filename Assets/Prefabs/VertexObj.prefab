@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8094815627158821714}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -106,6 +106,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BadgeObjectPrefab: {fileID: 8578020111256311284, guid: 825fcdf998dc6134eb4f6ffd820b2c03,
     type: 3}
+  MeshLevelsVillage:
+  - {fileID: 2658591844323079443, guid: f20413c290b65484ab3110cdf4ef1d4f, type: 3}
+  - {fileID: 3458320192801246717, guid: a484057c3031bc048a29668aae56e076, type: 3}
+  - {fileID: 799781657859584016, guid: cde7059ed23a70a499695a052f17847b, type: 3}
+  - {fileID: 6073905945409020968, guid: 8c5fedf13b5781040a86b5a7c0f00282, type: 3}
+  - {fileID: 2110846376497362859, guid: a002dc1cac006124eb5ec70f52e36d44, type: 3}
+  MeshLevelsApiary:
+  - {fileID: 6005007913301809478, guid: 9c46d3ba852795c4fb376237720082e4, type: 3}
+  - {fileID: 6558271200821132609, guid: 5c1319517f50b9242a1f73e1c63cfc91, type: 3}
+  - {fileID: 6855731013611092042, guid: 2d236d528dce167449384a4ba3704f35, type: 3}
+  - {fileID: 8648714970749345666, guid: 28aafbd92bf6a714e95415a1a3636261, type: 3}
+  - {fileID: 2553557492607804647, guid: be25199fd71e4cb4bbbcdbb37fa6077b, type: 3}
+  MeshLevelsShrine: []
   Id: 0
   Type: 0
   X: 0
@@ -114,4 +127,5 @@ MonoBehaviour:
   Connections: []
   ArmyPower: 0
   Owner: 0
-  _selected: 0
+  Selected: 0
+  Highlighted: 0
