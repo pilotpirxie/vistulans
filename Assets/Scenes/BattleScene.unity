@@ -179,7 +179,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &406677111
 GameObject:
@@ -277,7 +277,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &846776718
 MonoBehaviour:
@@ -294,6 +294,8 @@ MonoBehaviour:
   VertexObjectPrefab: {fileID: 8094815627158821714, guid: 21dc69cf2f54ba84891f37681058ed51,
     type: 3}
   ArmyObjectPrefab: {fileID: 3581865609455456488, guid: c8904c1d8460fc44796917282ca79d96,
+    type: 3}
+  RoadObjectPrefab: {fileID: 7390291402365370373, guid: 8ec0398ef18b820488a8cbaaaba98efa,
     type: 3}
 --- !u!114 &846776719
 MonoBehaviour:
@@ -455,7 +457,7 @@ PrefabInstance:
     - target: {fileID: 6770415643128908614, guid: afffdf8d20e4d8c4a80319d438a52d5b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6770415643128908614, guid: afffdf8d20e4d8c4a80319d438a52d5b,
         type: 3}
@@ -698,7 +700,7 @@ PrefabInstance:
     - target: {fileID: 8248868854680359035, guid: b9fb00e829bdc514ba95f1dd35fbc51f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8248868854680359035, guid: b9fb00e829bdc514ba95f1dd35fbc51f,
         type: 3}

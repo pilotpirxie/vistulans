@@ -106,7 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BadgeObjectPrefab: {fileID: 8578020111256311284, guid: 825fcdf998dc6134eb4f6ffd820b2c03,
     type: 3}
-  WhiteCircle: {fileID: 2931438565722979442, guid: fd7c25fd8fbf60240ab74ef44ce5a29f,
+  WhiteCirclePrefab: {fileID: 2931438565722979442, guid: fd7c25fd8fbf60240ab74ef44ce5a29f,
     type: 3}
   MeshLevelsVillage:
   - {fileID: 2658591844323079443, guid: f20413c290b65484ab3110cdf4ef1d4f, type: 3}

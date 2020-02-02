@@ -16,6 +16,12 @@ public class GraphController : MonoBehaviour
     public GameObject ArmyObjectPrefab;
 
     /// <summary>
+    /// Object with plane connecting two verices
+    /// </summary>
+    [SerializeField]
+    public GameObject RoadObjectPrefab;
+
+    /// <summary>
     /// Reference to gameplay controller from Mechanism object
     /// </summary>
     GameplayController _gameplayController;
@@ -61,7 +67,32 @@ public class GraphController : MonoBehaviour
 
             vertexA.GetComponent<VertexController>().Connections.Add(vertexB);
             vertexB.GetComponent<VertexController>().Connections.Add(vertexA);
+
+            SpawnRoad(vertexA.transform.position, vertexB.transform.position);
         }
+    }
+
+    /// <summary>
+    /// Spawn road using prefab, stretch it to match 
+    /// distances and set on the center, between two positions
+    /// </summary>
+    /// <param name="positionA"></param>
+    /// <param name="positionB"></param>
+    void SpawnRoad(Vector3 positionA, Vector3 positionB)
+    {
+        Vector3 targetDirection = positionB - positionA;
+        targetDirection.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(targetDirection);
+
+        Vector3 center = (positionA + positionB) / 2;
+        center.y = 0.02f;
+        GameObject road = Instantiate(RoadObjectPrefab, center, rotation);
+
+        Vector3 currentScale = road.transform.localScale;
+        float nScale = Vector3.Distance(positionA, positionB);
+        Debug.Log(currentScale.y + " " + nScale);
+        currentScale.z = nScale / 10;
+        road.transform.localScale = currentScale;
     }
 
     public void FixedUpdate()
