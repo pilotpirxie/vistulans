@@ -145,7 +145,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: 0
     m_CustomResolution: -1
     m_Strength: 1
@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 846776717}
   - component: {fileID: 846776718}
   - component: {fileID: 846776719}
+  - component: {fileID: 846776720}
   m_Layer: 0
   m_Name: Mechanism
   m_TagString: Mechanism
@@ -318,7 +319,7 @@ MonoBehaviour:
   Mana: 
   Honey: 
   Army: 
-  _vertexList: []
+  VertexList: []
   SunshaftPrefab: {fileID: 512688558}
   SelectedVertexA: {fileID: 0}
   SelectedVertexB: {fileID: 0}
@@ -327,6 +328,37 @@ MonoBehaviour:
   GameplaySpeedMultiplier: 1
   SpellToCast: -1
   IsShowingMenu: 0
+--- !u!114 &846776720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846776716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9f648f7b371644d9f733d919f39f8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trees:
+  - {fileID: 4131533257208827860, guid: 49c10625c2748224a9034f3fa60d18fd, type: 3}
+  - {fileID: 633963228334362551, guid: 2a2f616044395ed43b63e06e4eeb0e29, type: 3}
+  Rocks:
+  - {fileID: 4099905766045536457, guid: eeda7e3cc19c417488f4581dd94d3e2c, type: 3}
+  - {fileID: 1946248589127348599, guid: 536d637f90e64914a8d78b033e9fede5, type: 3}
+  - {fileID: 4402419373989975324, guid: d9436acff70cb804baa6a53af2f96513, type: 3}
+  Bushes:
+  - {fileID: 218068167477151441, guid: 5205138619ca00f4e971c5a7c445b822, type: 3}
+  - {fileID: 1952408104726845342, guid: 54b2b5ed287a5a643804ea47281dfbb2, type: 3}
+  Mushrooms:
+  - {fileID: 2889325185842933097, guid: a474d6e7b6d614d4c9594f1522c5e305, type: 3}
+  - {fileID: 6703692634835065125, guid: 926fa7c7c93270148870353b6ef424cb, type: 3}
+  MaximumTreesCount: 1500
+  MaximumRocks: 50
+  MaximumBushes: 50
+  MaximumMushrooms: 50
+  HorizontalSpawnArea: {x: -20, y: 20}
+  VerticalSpawnArea: {x: -15, y: 15}
 --- !u!1 &1806313878
 GameObject:
   m_ObjectHideFlags: 0

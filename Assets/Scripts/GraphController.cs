@@ -89,10 +89,13 @@ public class GraphController : MonoBehaviour
         GameObject road = Instantiate(RoadObjectPrefab, center, rotation);
 
         Vector3 currentScale = road.transform.localScale;
-        float nScale = Vector3.Distance(positionA, positionB);
-        Debug.Log(currentScale.y + " " + nScale);
-        currentScale.z = nScale / 10;
+        float newScale = Vector3.Distance(positionA, positionB);
+        currentScale.z = newScale / 10;
         road.transform.localScale = currentScale;
+
+        EdgeController edgeController = road.GetComponent<EdgeController>();
+        edgeController.StartPosition = positionA;
+        edgeController.EndPosition = positionB;
     }
 
     public void FixedUpdate()

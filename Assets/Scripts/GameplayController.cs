@@ -14,8 +14,10 @@ public class GameplayController : MonoBehaviour
     public int[] Honey;
     public int[] Army;
 
-    [SerializeField]
-    private List<VertexController> _vertexList;
+    /// <summary>
+    /// List of all vertex on the map
+    /// </summary>
+    public List<VertexController> VertexList;
 
     /// <summary>
     /// Represents which vertex is actually selected
@@ -64,7 +66,7 @@ public class GameplayController : MonoBehaviour
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Vertex"))
         {
-            _vertexList.Add(obj.GetComponent<VertexController>());
+            VertexList.Add(obj.GetComponent<VertexController>());
         }
 
         InvokeRepeating("IncreaseUnits", 2.0f, 2.0f);
@@ -118,7 +120,7 @@ public class GameplayController : MonoBehaviour
             Army[i] = 0;
         }
 
-        foreach (VertexController vertex in _vertexList)
+        foreach (VertexController vertex in VertexList)
         {
             switch (vertex.Type)
             {
@@ -234,7 +236,7 @@ public class GameplayController : MonoBehaviour
     /// <param name="vertex"></param>
     public void CastEarthquakeSpell(VertexController vertex)
     {
-        foreach (VertexController tempVertex in _vertexList)
+        foreach (VertexController tempVertex in VertexList)
         {
             if (tempVertex.Owner == vertex.Owner)
             {

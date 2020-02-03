@@ -8,6 +8,7 @@ TagManager:
   - LevelController
   - Army
   - Mechanism
+  - Edge
   layers:
   - Default
   - TransparentFX
