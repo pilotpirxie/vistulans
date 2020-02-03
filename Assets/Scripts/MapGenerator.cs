@@ -21,14 +21,14 @@ public class MapGenerator : MonoBehaviour
     public int MaximumMushrooms = 100;
 
     /// <summary>
-    /// Spawn area on the X-axis 
+    /// Minaml coords to spawn 
     /// </summary>
-    public Vector2 HorizontalSpawnArea = new Vector2(-15f, 15f);
+    public Vector2 MinimumCoordinates = new Vector2(-15f, 15f);
 
     /// <summary>
-    /// Spawn area on the Z-axis
+    /// Maximal coords to spawn
     /// </summary>
-    public Vector2 VerticalSpawnArea = new Vector2(-15f, 15f);
+    public Vector2 MaximumCoordinates = new Vector2(-15f, 15f);
 
     /// <summary>
     /// References to all vertices in the game
@@ -81,7 +81,7 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < 100; i++)
         {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(HorizontalSpawnArea.x, HorizontalSpawnArea.y), -0.1f, UnityEngine.Random.Range(VerticalSpawnArea.x, VerticalSpawnArea.y));
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(MinimumCoordinates.x, MaximumCoordinates.x), -0.1f, UnityEngine.Random.Range(MinimumCoordinates.y, MaximumCoordinates.y));
             if (CanSpawn(spawnPosition))
             {
                 int randomValue = (int)Math.Ceiling((double)UnityEngine.Random.Range(0.01f, 2));
@@ -97,7 +97,7 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < 100; i++)
         {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(HorizontalSpawnArea.x, HorizontalSpawnArea.y), -0.1f, UnityEngine.Random.Range(VerticalSpawnArea.x, VerticalSpawnArea.y));
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(MinimumCoordinates.x, MaximumCoordinates.x), -0.1f, UnityEngine.Random.Range(MinimumCoordinates.y, MaximumCoordinates.y));
             if (CanSpawn(spawnPosition))
             {
                 int randomValue = (int)Math.Ceiling((double)UnityEngine.Random.Range(0.01f, 3));
@@ -113,7 +113,7 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < 100; i++)
         {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(HorizontalSpawnArea.x, HorizontalSpawnArea.y), -0.1f, UnityEngine.Random.Range(VerticalSpawnArea.x, VerticalSpawnArea.y));
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(MinimumCoordinates.x, MaximumCoordinates.x), -0.1f, UnityEngine.Random.Range(MinimumCoordinates.y, MaximumCoordinates.y));
             if (CanSpawn(spawnPosition))
             {
                 int randomValue = (int)Math.Ceiling((double)UnityEngine.Random.Range(0.01f, 2));
@@ -129,7 +129,7 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < 100; i++)
         {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(HorizontalSpawnArea.x, HorizontalSpawnArea.y), -0.1f, UnityEngine.Random.Range(VerticalSpawnArea.x, VerticalSpawnArea.y));
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(MinimumCoordinates.x, MaximumCoordinates.x), -0.1f, UnityEngine.Random.Range(MinimumCoordinates.y, MaximumCoordinates.y));
             if (CanSpawn(spawnPosition))
             {
                 int randomValue = (int)Math.Ceiling((double)UnityEngine.Random.Range(0.01f, 2));

@@ -357,8 +357,8 @@ MonoBehaviour:
   MaximumRocks: 100
   MaximumBushes: 100
   MaximumMushrooms: 100
-  HorizontalSpawnArea: {x: -20, y: 20}
-  VerticalSpawnArea: {x: -15, y: 15}
+  MinimumCoordinates: {x: -17, y: -17}
+  MaximumCoordinates: {x: 17, y: 17}
 --- !u!1 &1806313878
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +458,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6354477385853679964, guid: afffdf8d20e4d8c4a80319d438a52d5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0007324219
+      objectReference: {fileID: 0}
     - target: {fileID: 6770415641188408206, guid: afffdf8d20e4d8c4a80319d438a52d5b,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -666,6 +671,26 @@ PrefabInstance:
         type: 3}
       propertyPath: MinHeight
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 588894499465828033, guid: 4ae9c68064d81b749b96e1ad18b246e7,
+        type: 3}
+      propertyPath: MinimumCoordinates.x
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 588894499465828033, guid: 4ae9c68064d81b749b96e1ad18b246e7,
+        type: 3}
+      propertyPath: MinimumCoordinates.y
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 588894499465828033, guid: 4ae9c68064d81b749b96e1ad18b246e7,
+        type: 3}
+      propertyPath: MaximumCoordinates.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 588894499465828033, guid: 4ae9c68064d81b749b96e1ad18b246e7,
+        type: 3}
+      propertyPath: MaximumCoordinates.y
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3993901705841455284, guid: 4ae9c68064d81b749b96e1ad18b246e7,
         type: 3}

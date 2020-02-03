@@ -74,12 +74,12 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// Minimum coordinates of edges for camera
     /// </summary>
-    public Vector2 MinimumCoordinates = new Vector2(0f, 0f);
+    public Vector2 MinimumCoordinates = new Vector2(-15f, -15f);
 
     /// <summary>
     /// Maximum coordinates of edges for camera
     /// </summary>
-    public Vector2 MaximumCoordinates = new Vector2(0f, 0f);
+    public Vector2 MaximumCoordinates = new Vector2(15f, 15f);
 
     void Update()
     {
@@ -234,8 +234,14 @@ public class CameraController : MonoBehaviour
 
         if (distance >= MaxMoveSpeed / 5 && distance <= MaxMoveSpeed * 2)
         {
-            transform.position = _targetPosition;
-            _isMovingTo = false;
+            if (_targetPosition.x <= transform.position.x && _targetPosition.x > MinimumCoordinates.x || _targetPosition.x > transform.position.x && _targetPosition.x < MaximumCoordinates.x)
+            {
+                if (_targetPosition.z <= transform.position.z && _targetPosition.z > MinimumCoordinates.y || _targetPosition.z > transform.position.z && _targetPosition.z < MaximumCoordinates.y)
+                { 
+                    transform.position = _targetPosition;
+                    _isMovingTo = false;
+                }
+            }
         }
     }
 
