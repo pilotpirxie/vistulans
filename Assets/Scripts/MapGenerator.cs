@@ -52,15 +52,31 @@ public class MapGenerator : MonoBehaviour
     {
         _vertices = GameObject.FindGameObjectsWithTag("Vertex");
         _edges = GameObject.FindGameObjectsWithTag("Edge");
-        Invoke("SpawnTrees", 0.5f);
-        Invoke("SpawnBushes", 1f);
-        Invoke("SpawnRocks", 1.5f);
-        Invoke("SpawnMushrooms", 2f);
+
+        for (int i = 0; i < MaximumTreesCount / 100; i++)
+        {
+            Invoke("SpawnTrees", i * 0.025f);
+        }
+
+        for (int i = 0; i < MaximumBushes / 100; i++)
+        {
+            Invoke("SpawnBushes", i * 0.025f);
+        }
+
+        for (int i = 0; i < MaximumRocks / 100; i++)
+        {
+            Invoke("SpawnRocks", i * 0.025f);
+        }
+
+        for (int i = 0; i < MaximumMushrooms / 100; i++)
+        {
+            Invoke("SpawnMushrooms", i * 0.025f);
+        }
     }
 
     void SpawnTrees()
     {
-        for (int i = 0; i < MaximumTreesCount; i++)
+        for (int i = 0; i < 100; i++)
         {
             Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(HorizontalSpawnArea.x, HorizontalSpawnArea.y), -0.1f, UnityEngine.Random.Range(VerticalSpawnArea.x, VerticalSpawnArea.y));
             if (CanSpawn(spawnPosition))
@@ -73,7 +89,7 @@ public class MapGenerator : MonoBehaviour
 
     void SpawnRocks()
     {
-        for (int i = 0; i < MaximumRocks; i++)
+        for (int i = 0; i < 100; i++)
         {
             Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(HorizontalSpawnArea.x, HorizontalSpawnArea.y), -0.1f, UnityEngine.Random.Range(VerticalSpawnArea.x, VerticalSpawnArea.y));
             if (CanSpawn(spawnPosition))
@@ -86,7 +102,7 @@ public class MapGenerator : MonoBehaviour
 
     void SpawnMushrooms()
     {
-        for (int i = 0; i < MaximumMushrooms; i++)
+        for (int i = 0; i < 100; i++)
         {
             Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(HorizontalSpawnArea.x, HorizontalSpawnArea.y), -0.1f, UnityEngine.Random.Range(VerticalSpawnArea.x, VerticalSpawnArea.y));
             if (CanSpawn(spawnPosition))
@@ -99,7 +115,7 @@ public class MapGenerator : MonoBehaviour
 
     void SpawnBushes()
     {
-        for (int i = 0; i < MaximumBushes; i++)
+        for (int i = 0; i < 100; i++)
         {
             Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(HorizontalSpawnArea.x, HorizontalSpawnArea.y), -0.1f, UnityEngine.Random.Range(VerticalSpawnArea.x, VerticalSpawnArea.y));
             if (CanSpawn(spawnPosition))
