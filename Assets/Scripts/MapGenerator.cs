@@ -74,6 +74,9 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn trees on the map
+    /// </summary>
     void SpawnTrees()
     {
         for (int i = 0; i < 100; i++)
@@ -87,6 +90,9 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn rocks on the map
+    /// </summary>
     void SpawnRocks()
     {
         for (int i = 0; i < 100; i++)
@@ -100,6 +106,9 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn mushrooms on the map
+    /// </summary>
     void SpawnMushrooms()
     {
         for (int i = 0; i < 100; i++)
@@ -113,6 +122,9 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn bushes on the map
+    /// </summary>
     void SpawnBushes()
     {
         for (int i = 0; i < 100; i++)
@@ -170,6 +182,15 @@ public class MapGenerator : MonoBehaviour
         return Vector3.Distance(spawnPosition, vertex.transform.position);
     }
 
+    /// <summary>
+    /// Calculate distance of point from a line
+    /// https://brilliant.org/wiki/dot-product-distance-between-point-and-a-line/
+    /// https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
+    /// </summary>
+    /// <param name="point">Point</param>
+    /// <param name="start">Start of the line</param>
+    /// <param name="end">End of the line</param>
+    /// <returns></returns>
     float GetDistanceFromEdge(Vector2 point, Vector2 start, Vector2 end)
     {
         float A = point.x - start.x;
@@ -177,14 +198,14 @@ public class MapGenerator : MonoBehaviour
         float C = end.x - start.x;
         float D = end.y - start.y;
 
-        float dot = A * C + B * D;
-        float len_sq = C * C + D * D;
+        float dotProduct = A * C + B * D;
+        float lengthSquare = C * C + D * D;
 
         float param = -1;
 
-        if (len_sq != 0)
+        if (lengthSquare != 0)
         {
-            param = dot / len_sq;
+            param = dotProduct / lengthSquare;
         }
 
         float xx, yy;
