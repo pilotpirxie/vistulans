@@ -77,6 +77,51 @@ public class UIController : MonoBehaviour
         ManaText.text = _gameplayController.Mana[1].ToString();
         TransportPartText.text = $"{_gameplayController.TransportPart * 100}%";
         SpeedText.text = $"x{_gameplayController.GameplaySpeedMultiplier}";
+
+        if (_gameplayController.SpellToCast == 0)
+        {
+            Image image = SpellOffensive.GetComponent<Image>();
+            Color color = image.color;
+            color.a = 0.5f;
+            image.color = color;
+        }
+        else
+        {
+            Image image = SpellOffensive.GetComponent<Image>();
+            Color color = image.color;
+            color.a = 1;
+            image.color = color;
+        }
+
+        if (_gameplayController.SpellToCast == 1)
+        {
+            Image image = SpellEarthquake.GetComponent<Image>();
+            Color color = image.color;
+            color.a = 0.5f;
+            image.color = color;
+        }
+        else
+        {
+            Image image = SpellEarthquake.GetComponent<Image>();
+            Color color = image.color;
+            color.a = 1;
+            image.color = color;
+        }
+
+        if (_gameplayController.SpellToCast == 2)
+        {
+            Image image = SpellTakeover.GetComponent<Image>();
+            Color color = image.color;
+            color.a = 0.5f;
+            image.color = color;
+        }
+        else
+        {
+            Image image = SpellTakeover.GetComponent<Image>();
+            Color color = image.color;
+            color.a = 1;
+            image.color = color;
+        }
     }
 
     /// <summary>

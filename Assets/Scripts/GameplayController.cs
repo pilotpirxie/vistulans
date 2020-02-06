@@ -195,7 +195,8 @@ public class GameplayController : MonoBehaviour
     /// <param name="spellIndex">Index of spell</param>
     public void SetSpellToCastByPlayer(int spellIndex = -1)
     {
-        if (spellIndex == 0 && Mana[1] >= 100
+        if (spellIndex == -1 
+            ||spellIndex == 0 && Mana[1] >= 100
             || spellIndex == 1 && Mana[1] >= 300
             || spellIndex == 2 && Mana[1] >= 500)
         {

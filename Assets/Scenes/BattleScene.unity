@@ -353,8 +353,8 @@ MonoBehaviour:
   Mushrooms:
   - {fileID: 2889325185842933097, guid: a474d6e7b6d614d4c9594f1522c5e305, type: 3}
   - {fileID: 6703692634835065125, guid: 926fa7c7c93270148870353b6ef424cb, type: 3}
-  MaximumTreesCount: 2000
-  MaximumRocks: 100
+  MaximumTreesCount: 1000
+  MaximumRocks: 50
   MaximumBushes: 100
   MaximumMushrooms: 100
   MinimumCoordinates: {x: -17, y: -17}
