@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -61,7 +62,17 @@ public class UIController : MonoBehaviour
     /// <summary>
     /// Reference to gameplay controller in Mechanism object
     /// </summary>
-    private GameplayController _gameplayController;
+    GameplayController _gameplayController;
+
+    /// <summary>
+    /// Determine if menu should be visible
+    /// </summary>
+    public bool IsShowingPauseMenu = false;
+
+    /// <summary>
+    /// Canvas object with pause menu
+    /// </summary>
+    public GameObject PauseMenu;
 
     private void Start()
     {
@@ -198,6 +209,34 @@ public class UIController : MonoBehaviour
         SetPlayerUI();
         SetUpgradeButton();
         SetCastVignette();
+        SetPauseMenu();
+    }
+
+    void SetPauseMenu()
+    {
+        if (IsShowingPauseMenu)
+        {
+            PauseMenu.SetActive(true);
+        }
+        else
+        {
+            PauseMenu.SetActive(false);
+        }
+    }
+
+    public void OnContinue()
+    {
+        IsShowingPauseMenu = false;
+    }
+
+    public void OnRestart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void OnExit()
+    {
+        // exit to main menu
     }
 
     /// <summary>
@@ -237,7 +276,7 @@ public class UIController : MonoBehaviour
     /// </summary>
     public void OnMenuButton()
     {
-        _gameplayController.IsShowingMenu = true;
+        IsShowingPauseMenu = true;
     }
 
     /// <summary>

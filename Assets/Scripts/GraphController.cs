@@ -26,6 +26,7 @@ public class GraphController : MonoBehaviour
     /// </summary>
     GameplayController _gameplayController;
 
+
     void Start()
     {
         _gameplayController = GameObject.FindWithTag("Mechanism").GetComponent<GameplayController>();
@@ -151,7 +152,7 @@ public class GraphController : MonoBehaviour
                     {
                         // Calculate how many army power units are going to be send based on transport part
                         // Floor((total - 1) * transportPart) casted to Int
-                        int armyPowerToSend = (int)Mathf.Floor((firstVertex.GetComponent<VertexController>().ArmyPower - 1) * _gameplayController.TransportPart);
+                        int armyPowerToSend = (int)Mathf.Ceil((firstVertex.GetComponent<VertexController>().ArmyPower - 1) * _gameplayController.TransportPart);
 
                         // Send signal to send army from vertex A to B with amount of units calculated above
                         SendArmy(_gameplayController.SelectedVertexA.Id, _gameplayController.SelectedVertexB.Id, armyPowerToSend);
@@ -209,7 +210,7 @@ public class GraphController : MonoBehaviour
         GameObject vertexA = GameObject.Find($"vertex{origin}");
         VertexController originVertexController = vertexA.GetComponent<VertexController>();
 
-        if (originVertexController.ArmyPower >= amount)
+        if (originVertexController.ArmyPower >= amount && amount > 0)
         {
             // Substract army power from the origin
             originVertexController.ArmyPower -= amount;

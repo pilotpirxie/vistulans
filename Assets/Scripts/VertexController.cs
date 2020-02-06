@@ -115,6 +115,11 @@ public class VertexController : MonoBehaviour
     /// </summary>
     public bool Highlighted = false;
 
+    /// <summary>
+    /// Reference to UI controller
+    /// </summary>
+    UIController _uiController;
+
     void Start()
     {
         GameObject newBadge = GameObject.Instantiate(BadgeObjectPrefab, gameObject.transform.position - new Vector3(0.15f, 0.5f, 1.5f), Quaternion.identity);
@@ -125,6 +130,11 @@ public class VertexController : MonoBehaviour
         if (_mechanismObject == null)
         {
             _mechanismObject = GameObject.Find("Mechanism");
+        }
+
+        if (_uiController == null)
+        {
+            _uiController = GameObject.Find("GameplayUI").GetComponent<UIController>();
         }
 
         SetViewObject();
@@ -182,6 +192,9 @@ public class VertexController : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
-        _mechanismObject.GetComponent<GraphController>().OnVertexTouch(gameObject.GetComponent<VertexController>().Id);
+        if (_uiController.IsShowingPauseMenu == false)
+        {
+            _mechanismObject.GetComponent<GraphController>().OnVertexTouch(gameObject.GetComponent<VertexController>().Id);
+        }
     }
 }

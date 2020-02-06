@@ -81,58 +81,74 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public Vector2 MaximumCoordinates = new Vector2(15f, 15f);
 
+    /// <summary>
+    /// Reference to UI controller
+    /// </summary>
+    UIController _uiController;
+
+    private void Start()
+    {
+        if (_uiController == null)
+        {
+            _uiController = GameObject.Find("GameplayUI").GetComponent<UIController>();
+        }
+    }
+
     void Update()
     {
-        // Check if is touch input,
-        // otherwise reset positions
-        // check for mouse input
-        if (Input.touchCount > 0)
+        if (_uiController.IsShowingPauseMenu == false)
         {
-            // Check if is touching with single finger
-            // and not zooming
-            if (Input.touchCount == 1 && _isZooming == false)
+            // Check if is touch input,
+            // otherwise reset positions
+            // check for mouse input
+            if (Input.touchCount > 0)
             {
-                SingleTouch();
+                // Check if is touching with single finger
+                // and not zooming
+                if (Input.touchCount == 1 && _isZooming == false)
+                {
+                    SingleTouch();
+                }
+
+                // Or with two fingers and not dragging
+                if (Input.touchCount == 2 && _isDragging == false)
+                {
+                    DualTouch();
+                }
+            }
+            else
+            {
+                ResetPositions();
+
+                // Check if left button is pressed down (on start)
+                if (Input.GetMouseButtonDown(0))
+                {
+                    SetStartScreenPosition(Input.mousePosition);
+                }
+
+                // Check if left button is hold down
+                if (Input.GetMouseButton(0))
+                {
+                    SetMoveScreenPosition(Input.mousePosition);
+                }
             }
 
-            // Or with two fingers and not dragging
-            if (Input.touchCount == 2 && _isDragging == false)
+            // If flag for moving to is set
+            // move camera in direction of target position
+            if (_isMovingTo == true)
             {
-                DualTouch();   
-            }
-        }
-        else
-        {
-            ResetPositions();
-
-            // Check if left button is pressed down (on start)
-            if (Input.GetMouseButtonDown(0))
-            {
-                SetStartScreenPosition(Input.mousePosition);
+                TransformCamera();
             }
 
-            // Check if left button is hold down
-            if (Input.GetMouseButton(0))
+            // Check if mouse input is scrolling in/out
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                SetMoveScreenPosition(Input.mousePosition);
+                Zoom(true);
             }
-        }
-
-        // If flag for moving to is set
-        // move camera in direction of target position
-        if (_isMovingTo == true)
-        {
-            TransformCamera();
-        }
-        
-        // Check if mouse input is scrolling in/out
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            Zoom(true);
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            Zoom(false);
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                Zoom(false);
+            }
         }
     }
 

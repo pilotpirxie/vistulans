@@ -327,7 +327,6 @@ MonoBehaviour:
   TransportPart: 0.5
   GameplaySpeedMultiplier: 1
   SpellToCast: -1
-  IsShowingMenu: 0
 --- !u!114 &846776720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,7 +933,7 @@ PrefabInstance:
     - target: {fileID: 8248868854680359039, guid: b9fb00e829bdc514ba95f1dd35fbc51f,
         type: 3}
       propertyPath: m_Name
-      value: MenuUI
+      value: PauseMenuUI
       objectReference: {fileID: 0}
     - target: {fileID: 8248868854680359039, guid: b9fb00e829bdc514ba95f1dd35fbc51f,
         type: 3}

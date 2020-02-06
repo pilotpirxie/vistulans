@@ -33,7 +33,12 @@ public class GameplayController : MonoBehaviour
     /// <summary>
     /// Reference to Graph Controller in Mechanism object
     /// </summary>
-    public GraphController _graphController;
+    public GraphController GraphController;
+
+    /// <summary>
+    /// Reference to UI controller
+    /// </summary>
+    UIController _uiController;
 
     /// <summary>
     /// Part of total army power to send from vertex A to B
@@ -53,11 +58,6 @@ public class GameplayController : MonoBehaviour
     /// </summary>
     public int SpellToCast = -1;
 
-    /// <summary>
-    /// Is howing pause menu or not
-    /// </summary>
-    public bool IsShowingMenu = false;
-
     void Start()
     {
         Mana = new int[] { 0, 0, 0, 0, 0 };
@@ -71,7 +71,15 @@ public class GameplayController : MonoBehaviour
 
         InvokeRepeating("IncreaseUnits", 2.0f, 2.0f);
 
-        _graphController = gameObject.GetComponent<GraphController>();
+        if (GraphController == null)
+        {
+            GraphController = gameObject.GetComponent<GraphController>();
+        }
+
+        if (_uiController == null)
+        {
+            _uiController = GameObject.Find("GameplayUI").GetComponent<UIController>();
+        }
     }
 
     public void FixedUpdate()
@@ -103,9 +111,16 @@ public class GameplayController : MonoBehaviour
     /// </summary>
     void SetTimeScale()
     {
-        if (Time.timeScale != GameplaySpeedMultiplier)
+        if (_uiController.IsShowingPauseMenu == false)
         {
-            Time.timeScale = GameplaySpeedMultiplier;
+            if (Time.timeScale != GameplaySpeedMultiplier)
+            {
+                Time.timeScale = GameplaySpeedMultiplier;
+            }
+        }
+        else
+        {
+            Time.timeScale = 0.1f;
         }
     }
 
@@ -163,7 +178,7 @@ public class GameplayController : MonoBehaviour
             }
 
             SpellToCast = -1;
-            _graphController.ClearSelection();
+            GraphController.ClearSelection();
         }
     }
 
@@ -214,7 +229,7 @@ public class GameplayController : MonoBehaviour
             Debug.Log("Insufficient mana");
         }
 
-        _graphController.ClearSelection();
+        GraphController.ClearSelection();
     }
 
     /// <summary>
