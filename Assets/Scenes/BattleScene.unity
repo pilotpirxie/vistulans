@@ -304,8 +304,6 @@ MonoBehaviour:
     type: 3}
   WhiteRoadObjectPrefab: {fileID: 7390291402365370373, guid: 8ec0398ef18b820488a8cbaaaba98efa,
     type: 3}
-  DirtyRoad: {fileID: 3363937555784274222, guid: 1b263776a5d13464da1880cc2b16a6d2,
-    type: 3}
 --- !u!114 &846776719
 MonoBehaviour:
   m_ObjectHideFlags: 0

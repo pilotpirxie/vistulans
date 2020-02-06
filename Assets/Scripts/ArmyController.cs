@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using TMPro;
+using System.Collections.Generic;
 
 public class ArmyController : MonoBehaviour
 {
@@ -42,6 +44,23 @@ public class ArmyController : MonoBehaviour
     public bool AlreadyTriggering = false;
 
     /// <summary>
+    /// Text with army power
+    /// </summary>
+    [SerializeField]
+    private TextMeshProUGUI _bannerText;
+
+    /// <summary>
+    /// Background of banner to replace
+    /// </summary>
+    [SerializeField]
+    private SpriteRenderer _bannerBackground;
+
+    /// <summary>
+    /// Possible banners to use
+    /// </summary>
+    public List<Sprite> BannerBackgrounds = new List<Sprite>();
+
+    /// <summary>
     /// Set target object based on index id
     /// and color of material for army object mesh
     /// </summary>
@@ -72,6 +91,12 @@ public class ArmyController : MonoBehaviour
         }
     }
 
+    void UpdateBanner()
+    {
+        _bannerText.text = $"{ArmyPower}";
+        _bannerBackground.sprite = BannerBackgrounds[(int)Owner];
+    }
+
     /// <summary>
     /// Set position of army object
     /// in target direction
@@ -91,6 +116,7 @@ public class ArmyController : MonoBehaviour
     {
         UpdateTarget();
         MoveArmy();
+        UpdateBanner();
     }
 
     /// <summary>
