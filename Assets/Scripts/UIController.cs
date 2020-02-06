@@ -78,6 +78,33 @@ public class UIController : MonoBehaviour
         TransportPartText.text = $"{_gameplayController.TransportPart * 100}%";
         SpeedText.text = $"x{_gameplayController.GameplaySpeedMultiplier}";
 
+        if (_gameplayController.Mana[1] >= 100)
+        {
+            SpellOffensive.interactable = true;
+        }
+        else
+        {
+            SpellOffensive.interactable = false;
+        }
+
+        if (_gameplayController.Mana[1] >= 300)
+        {
+            SpellEarthquake.interactable = true;
+        }
+        else
+        {
+            SpellEarthquake.interactable = false;
+        }
+
+        if (_gameplayController.Mana[1] >= 500)
+        {
+            SpellTakeover.interactable = true;
+        }
+        else
+        {
+            SpellTakeover.interactable = false;
+        }
+
         if (_gameplayController.SpellToCast == 0)
         {
             Image image = SpellOffensive.GetComponent<Image>();
@@ -134,6 +161,15 @@ public class UIController : MonoBehaviour
         {
             Upgrade.gameObject.SetActive(true);
             UpgradeCostText.text = $"{_gameplayController.SelectedVertexA.Level * 25} HONEY";
+
+            if (_gameplayController.Honey[1] >= _gameplayController.SelectedVertexA.Level * 25)
+            {
+                Upgrade.interactable = true;
+            }
+            else
+            {
+                Upgrade.interactable = false;
+            }
         }
         else
         {

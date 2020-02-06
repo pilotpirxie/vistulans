@@ -16,10 +16,10 @@ public class GraphController : MonoBehaviour
     public GameObject ArmyObjectPrefab;
 
     /// <summary>
-    /// Object with plane connecting two verices
+    /// Object with plane connecting two vertices
     /// </summary>
     [SerializeField]
-    public GameObject RoadObjectPrefab;
+    public GameObject WhiteRoadObjectPrefab;
 
     /// <summary>
     /// Reference to gameplay controller from Mechanism object
@@ -83,10 +83,10 @@ public class GraphController : MonoBehaviour
         Vector3 targetDirection = positionB - positionA;
         targetDirection.y = 0;
         Quaternion rotation = Quaternion.LookRotation(targetDirection);
-
         Vector3 center = (positionA + positionB) / 2;
         center.y = 0.02f;
-        GameObject road = Instantiate(RoadObjectPrefab, center, rotation);
+
+        GameObject road = Instantiate(WhiteRoadObjectPrefab, center, rotation);
 
         Vector3 currentScale = road.transform.localScale;
         float newScale = Vector3.Distance(positionA, positionB);

@@ -1,5 +1,7 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BadgeController : MonoBehaviour
 {
@@ -19,6 +21,11 @@ public class BadgeController : MonoBehaviour
     public VertexType Type;
 
     /// <summary>
+    /// Icon of type
+    /// </summary>
+    public SpriteRenderer TypeImage;
+
+    /// <summary>
     /// Owner to display
     /// </summary>
     public OwnerType Owner;
@@ -36,51 +43,28 @@ public class BadgeController : MonoBehaviour
     TextMeshProUGUI _armyPowerText;
 
     /// <summary>
-    /// Label with vertex type
-    /// </summary>
-    [SerializeField]
-    TextMeshProUGUI _typeText;
-
-    /// <summary>
     /// Sprite with background image
     /// </summary>
     [SerializeField]
     SpriteRenderer _background;
 
     /// <summary>
-    /// Prefab of image used for wild owner type
+    /// List of fields used as background for badge
     /// </summary>
     [SerializeField]
-    Sprite _wildBackground;
+    List<Sprite> _sprites = new List<Sprite>();
 
     /// <summary>
-    /// Prefab of image used for player owner
+    /// List of icon types
     /// </summary>
     [SerializeField]
-    Sprite _playerBackground;
-
-    /// <summary>
-    /// Prefab of image used for first enemy owner
-    /// </summary>
-    [SerializeField]
-    Sprite _enemyOneBackground;
-
-    /// <summary>
-    /// Prefab of image used for second enemy owner
-    /// </summary>
-    [SerializeField]
-    Sprite _enemyTwoBackground;
-
-    /// <summary>
-    /// Prefab of image used for third enemy owner
-    /// </summary>
-    [SerializeField]
-    Sprite _enemyThreeBackground;
+    List<Sprite> _iconTypes = new List<Sprite>();
 
     private void FixedUpdate()
     {
         SetLabels();
         SetBackground();
+        SetIcons();
     }
 
     /// <summary>
@@ -93,14 +77,31 @@ public class BadgeController : MonoBehaviour
             _levelText.text = $"Lv. {Level}";
         }
 
+        switch(Level)
+        {
+            case 1:
+                _levelText.text = $"Lv. I";
+                break;
+            case 2:
+                _levelText.text = $"Lv. II";
+                break;
+            case 3:
+                _levelText.text = $"Lv. III";
+                break;
+            case 4:
+                _levelText.text = $"Lv. IV";
+                break;
+            case 5:
+                _levelText.text = $"Lv. V";
+                break;
+            default:
+                _levelText.text = $"Lv. {Level}";
+                break;
+        }
+
         if (_armyPowerText.text != ArmyPower.ToString())
         {
             _armyPowerText.text = ArmyPower.ToString();
-        }
-
-        if (_typeText.text != Type.ToString()[0].ToString())
-        {
-            _typeText.text = Type.ToString()[0].ToString();
         }
     }
 
@@ -109,22 +110,21 @@ public class BadgeController : MonoBehaviour
     /// </summary>
     void SetBackground()
     {
-        switch (Owner)
+        _background.sprite = _sprites[(int)Owner];
+    }
+
+    void SetIcons()
+    {
+        switch(Type)
         {
-            case OwnerType.Wild:
-                _background.sprite = _wildBackground;
+            case VertexType.Village:
+                TypeImage.sprite = _iconTypes[0];
                 break;
-            case OwnerType.Player:
-                _background.sprite = _playerBackground;
+            case VertexType.Shrine:
+                TypeImage.sprite = _iconTypes[1];
                 break;
-            case OwnerType.EnemyOne:
-                _background.sprite = _enemyOneBackground;
-                break;
-            case OwnerType.EnemyTwo:
-                _background.sprite = _enemyTwoBackground;
-                break;
-            case OwnerType.EnemyThree:
-                _background.sprite = _enemyThreeBackground;
+            case VertexType.Apiary:
+                TypeImage.sprite = _iconTypes[2];
                 break;
         }
     }

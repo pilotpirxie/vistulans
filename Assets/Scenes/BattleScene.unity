@@ -245,7 +245,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &512688558 stripped
 GameObject:
@@ -302,7 +302,9 @@ MonoBehaviour:
     type: 3}
   ArmyObjectPrefab: {fileID: 3581865609455456488, guid: c8904c1d8460fc44796917282ca79d96,
     type: 3}
-  RoadObjectPrefab: {fileID: 7390291402365370373, guid: 8ec0398ef18b820488a8cbaaaba98efa,
+  WhiteRoadObjectPrefab: {fileID: 7390291402365370373, guid: 8ec0398ef18b820488a8cbaaaba98efa,
+    type: 3}
+  DirtyRoad: {fileID: 3363937555784274222, guid: 1b263776a5d13464da1880cc2b16a6d2,
     type: 3}
 --- !u!114 &846776719
 MonoBehaviour:
@@ -449,7 +451,7 @@ Transform:
   m_LocalScale: {x: 25, y: 1, z: 25}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6770415643030887868
 PrefabInstance:
@@ -527,6 +529,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770415643068467722, guid: afffdf8d20e4d8c4a80319d438a52d5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770415643068467722, guid: afffdf8d20e4d8c4a80319d438a52d5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770415643068467722, guid: afffdf8d20e4d8c4a80319d438a52d5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6770415643128908614, guid: afffdf8d20e4d8c4a80319d438a52d5b,
         type: 3}
@@ -849,7 +866,7 @@ PrefabInstance:
     - target: {fileID: 8248868854680359035, guid: b9fb00e829bdc514ba95f1dd35fbc51f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8248868854680359035, guid: b9fb00e829bdc514ba95f1dd35fbc51f,
         type: 3}
@@ -973,7 +990,7 @@ PrefabInstance:
     - target: {fileID: 8683612448835556870, guid: 4b48d46e04edfab4d8720b64a76d18b8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8683612448835556870, guid: 4b48d46e04edfab4d8720b64a76d18b8,
         type: 3}
