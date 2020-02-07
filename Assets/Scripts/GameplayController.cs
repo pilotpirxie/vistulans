@@ -80,17 +80,35 @@ public class GameplayController : MonoBehaviour
         {
             _uiController = GameObject.Find("GameplayUI").GetComponent<UIController>();
         }
-
-        if (PlayerPrefs.HasKey("IsMusicPlaying"))
-        {
-            Debug.Log(PlayerPrefs.GetInt("IsMusicPlaying"));
-        }
     }
 
     public void FixedUpdate()
     {
         CastPlayerSpell();
         SetTimeScale();
+        CheckForWinner();
+    }
+
+    void CheckForWinner()
+    {
+        int captured = 0;
+
+        foreach(VertexController vertex in VertexList)
+        {
+            if (vertex.Owner == OwnerType.Player)
+            {
+                captured++;
+            }
+        }
+
+        if (captured == 0)
+        {
+            Invoke("ShowFailureMessage", 1.0f);
+        }
+        else if (captured == VertexList.Count)
+        {
+            Invoke("ShowSuccessMessage", 1.0f);
+        }
     }
 
     /// <summary>

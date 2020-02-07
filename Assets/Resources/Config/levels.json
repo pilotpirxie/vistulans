@@ -11,7 +11,7 @@
           "y": -4,
           "level": 1,
           "owner": 1,
-          "power": 25
+          "power": 45
         },
         {
           "id": 1,
@@ -57,6 +57,143 @@
         {
           "a": 0,
           "b": 3
+        }
+      ]
+    },
+    {
+      "title": "Test 2 map",
+      "background": 0,
+      "verticies": [
+        {
+          "id": 0,
+          "type": 0,
+          "x": -1,
+          "y": -1,
+          "level": 1,
+          "owner": 1,
+          "power": 35
+        },
+        {
+          "id": 1,
+          "type": 2,
+          "x": 2,
+          "y": -1,
+          "level": 1,
+          "owner": 0,
+          "power": 15
+        },
+        {
+          "id": 2,
+          "type": 0,
+          "x": 0,
+          "y": 2,
+          "level": 1,
+          "owner": 2,
+          "power": 40
+        },
+        {
+          "id": 3,
+          "type": 1,
+          "x": -3,
+          "y": 2,
+          "level": 1,
+          "owner": 0,
+          "power": 15
+        }
+      ],
+      "edges": [
+        {
+          "a": 0,
+          "b": 1
+        },
+        {
+          "a": 0,
+          "b": 2
+        },
+        {
+          "a": 2,
+          "b": 3
+        },
+        {
+          "a": 0,
+          "b": 3
+        }
+      ]
+    },
+    {
+      "title": "Test 3 map",
+      "background": 0,
+      "verticies": [
+        {
+          "id": 0,
+          "type": 0,
+          "x": -2,
+          "y": -1,
+          "level": 1,
+          "owner": 1,
+          "power": 40
+        },
+        {
+          "id": 1,
+          "type": 2,
+          "x": 2,
+          "y": -1,
+          "level": 1,
+          "owner": 0,
+          "power": 15
+        },
+        {
+          "id": 2,
+          "type": 0,
+          "x": 0,
+          "y": 2,
+          "level": 1,
+          "owner": 2,
+          "power": 40
+        },
+        {
+          "id": 3,
+          "type": 1,
+          "x": -4,
+          "y": 3,
+          "level": 1,
+          "owner": 0,
+          "power": 15
+        },
+        {
+          "id": 4,
+          "type": 1,
+          "x": -2,
+          "y": -5,
+          "level": 1,
+          "owner": 0,
+          "power": 15
+        }
+      ],
+      "edges": [
+        {
+          "a": 0,
+          "b": 1
+        },
+        {
+          "a": 1,
+          "b": 2
+        },
+        {
+          "a": 2,
+          "b": 3
+        },
+        {
+          "a": 0,
+          "b": 3
+        },
+        {
+          "a": 0,
+          "b": 3
+        },
+        {
+          "a": 0,
+          "b": 4
         }
       ]
     }

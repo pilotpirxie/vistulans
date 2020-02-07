@@ -10,6 +10,8 @@ public class MainMenuController : MonoBehaviour
 
     public GameObject Tutorial;
 
+    public GameObject SelectLevel;
+
     void Start()
     {
         if (PlayerPrefs.HasKey("IsMusicPlaying"))
@@ -43,7 +45,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnPlay()
     {
-        SceneManager.LoadScene("BattleScene", LoadSceneMode.Single);
+        SelectLevel.SetActive(true);
     }
 
     /// <summary>
@@ -59,7 +61,8 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnCloseTutorial()
     {
-        Tutorial.SetActive(false);
+        Tutorial
+            .SetActive(false);
     }
 
     /// <summary>
