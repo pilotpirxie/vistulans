@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameplayController : MonoBehaviour
 {
@@ -58,6 +59,11 @@ public class GameplayController : MonoBehaviour
     /// </summary>
     public int SpellToCast = -1;
 
+    /// <summary>
+    /// Flag to prevent multiple transition to main menu
+    /// </summary>
+    private bool _beforeNavigateToMainMenu = false;
+
     void Start()
     {
         Mana = new int[] { 0, 0, 0, 0, 0 };
@@ -89,6 +95,9 @@ public class GameplayController : MonoBehaviour
         CheckForWinner();
     }
 
+    /// <summary>
+    /// Count how many player has vertices and decide if show message or not
+    /// </summary>
     void CheckForWinner()
     {
         int captured = 0;
@@ -103,12 +112,37 @@ public class GameplayController : MonoBehaviour
 
         if (captured == 0)
         {
-            Invoke("ShowFailureMessage", 1.0f);
+            if (_beforeNavigateToMainMenu == false)
+            {
+                _uiController.ShowFail();
+                Invoke("NavigateToMainMenu", 3.0f);
+                _beforeNavigateToMainMenu = true;
+            }
         }
         else if (captured == VertexList.Count)
         {
-            Invoke("ShowSuccessMessage", 1.0f);
+            if (_beforeNavigateToMainMenu == false)
+            {
+                _uiController.ShowWin();
+
+                int currentLevel = PlayerPrefs.GetInt("LevelToPlayIndex", 0);
+                int currentFinishedLevel = PlayerPrefs.GetInt("FinishedLevels", 0);
+
+                if (currentLevel + 1 > currentFinishedLevel)
+                {
+                    PlayerPrefs.SetInt("FinishedLevels", currentLevel + 1);
+                    PlayerPrefs.Save();
+                }
+
+                Invoke("NavigateToMainMenu", 3.0f);
+                _beforeNavigateToMainMenu = true;
+            }
         }
+    }
+
+    void NavigateToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     /// <summary>

@@ -74,6 +74,21 @@ public class UIController : MonoBehaviour
     /// </summary>
     public GameObject PauseMenu;
 
+    /// <summary>
+    /// Object with win/lose canvas
+    /// </summary>
+    public GameObject WinLoseCanvas;
+
+    /// <summary>
+    /// Object with win text
+    /// </summary>
+    public GameObject Win;
+
+    /// <summary>
+    /// Object with fail text
+    /// </summary>
+    public GameObject Fail;
+
     private void Start()
     {
         if (_gameplayController == null)
@@ -215,6 +230,27 @@ public class UIController : MonoBehaviour
         SetPauseMenu();
     }
 
+    /// <summary>
+    /// Show win canvas message
+    /// </summary>
+    public void ShowWin()
+    {
+        WinLoseCanvas.SetActive(true);
+        Win.SetActive(true);
+    }
+
+    /// <summary>
+    /// Show fail canvas message
+    /// </summary>
+    public void ShowFail()
+    {
+        WinLoseCanvas.SetActive(true);
+        Fail.SetActive(true);
+    }
+
+    /// <summary>
+    /// Determine if showin pause menu
+    /// </summary>
     void SetPauseMenu()
     {
         if (IsShowingPauseMenu)
@@ -227,16 +263,25 @@ public class UIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Triggered on continue button
+    /// </summary>
     public void OnContinue()
     {
         IsShowingPauseMenu = false;
     }
 
+    /// <summary>
+    /// Triggered on restart button
+    /// </summary>
     public void OnRestart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    /// <summary>
+    /// Triggered on exit to main menu button
+    /// </summary>
     public void OnExit()
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class MainMenuController : MonoBehaviour
@@ -16,7 +15,7 @@ public class MainMenuController : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("IsMusicPlaying"))
         {
-            IsMusicPlaying = PlayerPrefs.GetInt("IsMusicPlaying");
+            IsMusicPlaying = PlayerPrefs.GetInt("IsMusicPlaying", 1);
         }
         else
         {
