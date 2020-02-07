@@ -76,7 +76,10 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        _gameplayController = GameObject.FindWithTag("Mechanism").GetComponent<GameplayController>();
+        if (_gameplayController == null)
+        {
+            _gameplayController = GameObject.FindWithTag("Mechanism").GetComponent<GameplayController>();
+        }
     }
 
     /// <summary>
@@ -236,7 +239,7 @@ public class UIController : MonoBehaviour
 
     public void OnExit()
     {
-        // exit to main menu
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     /// <summary>

@@ -80,6 +80,11 @@ public class GameplayController : MonoBehaviour
         {
             _uiController = GameObject.Find("GameplayUI").GetComponent<UIController>();
         }
+
+        if (PlayerPrefs.HasKey("IsMusicPlaying"))
+        {
+            Debug.Log(PlayerPrefs.GetInt("IsMusicPlaying"));
+        }
     }
 
     public void FixedUpdate()
