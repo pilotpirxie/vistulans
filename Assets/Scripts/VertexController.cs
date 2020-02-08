@@ -64,6 +64,11 @@ public class VertexController : MonoBehaviour
     /// Reference to mechanism object
     /// </summary>
     private GameObject _mechanismObject;
+    
+    /// <summary>
+    /// Reference to graph controller
+    /// </summary>
+    private GraphController _graphController;
 
     /// <summary>
     /// Id of vertex, used for comparing and name
@@ -132,6 +137,11 @@ public class VertexController : MonoBehaviour
             _mechanismObject = GameObject.Find("Mechanism");
         }
 
+        if (_graphController == null)
+        {
+            _graphController = GameObject.Find("Mechanism").GetComponent<GraphController>();
+        }
+
         if (_uiController == null)
         {
             _uiController = GameObject.Find("GameplayUI").GetComponent<UIController>();
@@ -195,6 +205,22 @@ public class VertexController : MonoBehaviour
         if (_uiController.IsShowingPauseMenu == false)
         {
             _mechanismObject.GetComponent<GraphController>().OnVertexTouch(gameObject.GetComponent<VertexController>().Id);
+        }
+    }
+
+    /// <summary>
+    /// Send army from this vertex to another (if possible)
+    /// </summary>
+    public void SendArmy(int targetVertexIndexId, int amount)
+    {
+        foreach (GameObject connection in Connections)
+        {
+            VertexController connectedVertex = connection.GetComponent<VertexController>();
+
+            if (targetVertexIndexId == connectedVertex.Id && amount <= ArmyPower - 1)
+            {
+                _graphController.SendArmy(Id, targetVertexIndexId, amount);
+            }
         }
     }
 }

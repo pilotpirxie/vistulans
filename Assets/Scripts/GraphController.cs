@@ -26,6 +26,10 @@ public class GraphController : MonoBehaviour
     /// </summary>
     GameplayController _gameplayController;
 
+    /// <summary>
+    /// Level configuration
+    /// </summary>
+    public LevelConfig LevelConfig;
 
     void Start()
     {
@@ -36,13 +40,13 @@ public class GraphController : MonoBehaviour
 
         // Load JSON and parse it
         TextAsset levelConfigContent = Resources.Load<TextAsset>("Config/levels");
-        LevelConfig levelConfig = JsonUtility.FromJson<LevelConfig>(levelConfigContent.text);
+        LevelConfig = JsonUtility.FromJson<LevelConfig>(levelConfigContent.text);
 
         // Get level index to render
         int levelToPlay = PlayerPrefs.GetInt("LevelToPlayIndex", 0);
 
         // Instantiate vertex for every entry in the LevelConfig
-        foreach (VertexConfig vertexConfig in levelConfig.levels[levelToPlay].verticies)
+        foreach (VertexConfig vertexConfig in LevelConfig.levels[levelToPlay].verticies)
         {
             // Instantiate and set position based on coordinates
             GameObject newVertex = Instantiate(VertexObjectPrefab, new Vector3(vertexConfig.x * 1f, 0.5f, -vertexConfig.y * 1f), Quaternion.identity);
@@ -67,7 +71,7 @@ public class GraphController : MonoBehaviour
         }
 
         // Set edges between vertices
-        foreach (EdgeConfig connection in levelConfig.levels[levelToPlay].edges)
+        foreach (EdgeConfig connection in LevelConfig.levels[levelToPlay].edges)
         {
             GameObject vertexA = GameObject.Find($"vertex{connection.a}");
             GameObject vertexB = GameObject.Find($"vertex{connection.b}");
@@ -120,11 +124,11 @@ public class GraphController : MonoBehaviour
     {
         GameObject vertex = GameObject.Find($"vertex{id}");
 
-        if (_gameplayController.SelectedVertexA == null)
+        if (_gameplayController.SelectedVertexA == null && vertex.GetComponent<VertexController>().Owner == OwnerType.Player)
         {
             _gameplayController.SelectedVertexA = vertex.GetComponent<VertexController>();
         }
-        else
+        else if (_gameplayController.SelectedVertexA != null)
         {
             _gameplayController.SelectedVertexB = vertex.GetComponent<VertexController>();
         }
