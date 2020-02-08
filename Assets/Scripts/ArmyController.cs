@@ -128,6 +128,7 @@ public class ArmyController : MonoBehaviour
         if (other.gameObject.tag == "Army")
         { 
             other.gameObject.GetComponent<ArmyController>().AlreadyTriggering = false;
+            AlreadyTriggering = false;
         }
     }
 
@@ -140,16 +141,16 @@ public class ArmyController : MonoBehaviour
         // Check if is not already affected by the second army
         if (AlreadyTriggering == false)
         {
-            // Depending if the second object is vertex or army
-            // call another method
-            if (other.gameObject.tag == "Vertex")
-            {
-                CollideWithVertex(other.gameObject);
-            }
-            else if (other.gameObject.tag == "Army")
+            // Check if two armies collide
+            if (other.gameObject.tag == "Army")
             {
                 CollideWithArmy(other.gameObject);
             }
+        }
+
+        if (other.gameObject.tag == "Vertex")
+        {
+            CollideWithVertex(other.gameObject);
         }
     }
 

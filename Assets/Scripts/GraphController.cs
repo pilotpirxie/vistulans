@@ -124,13 +124,24 @@ public class GraphController : MonoBehaviour
     {
         GameObject vertex = GameObject.Find($"vertex{id}");
 
-        if (_gameplayController.SelectedVertexA == null && vertex.GetComponent<VertexController>().Owner == OwnerType.Player)
+        if (_gameplayController.SpellToCast == -1)
         {
-            _gameplayController.SelectedVertexA = vertex.GetComponent<VertexController>();
+            if (_gameplayController.SelectedVertexA == null && vertex.GetComponent<VertexController>().Owner == OwnerType.Player)
+            {
+                _gameplayController.SelectedVertexA = vertex.GetComponent<VertexController>();
+            }
+            else if (_gameplayController.SelectedVertexA != null)
+            {
+                _gameplayController.SelectedVertexB = vertex.GetComponent<VertexController>();
+            }
         }
-        else if (_gameplayController.SelectedVertexA != null)
+        else
         {
-            _gameplayController.SelectedVertexB = vertex.GetComponent<VertexController>();
+            if (_gameplayController.SpellToCast != -1 && _gameplayController.SelectedVertexA == null && vertex.GetComponent<VertexController>().Owner != OwnerType.Player)
+            {
+                _gameplayController.SelectedVertexA = vertex.GetComponent<VertexController>();
+                _gameplayController.SelectedVertexB = null;
+            }
         }
 
         _gameplayController.SetPositionOfSunshaft();

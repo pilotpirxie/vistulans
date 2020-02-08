@@ -11,6 +11,8 @@ public class MainMenuController : MonoBehaviour
 
     public GameObject SelectLevel;
 
+    public AudioSource Audio;
+
     void Start()
     {
         if (PlayerPrefs.HasKey("IsMusicPlaying"))
@@ -31,10 +33,12 @@ public class MainMenuController : MonoBehaviour
             if (IsMusicPlaying == 0)
             {
                 MusicButtonText.text = "Music: Off";
+                Audio.mute = true;
             }
             else
             {
                 MusicButtonText.text = "Music: On";
+                Audio.mute = false;
             }
         }
     }

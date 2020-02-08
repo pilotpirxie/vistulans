@@ -64,6 +64,19 @@ public class GameplayController : MonoBehaviour
     /// </summary>
     private bool _beforeNavigateToMainMenu = false;
 
+    /// <summary>
+    /// Particles for spells and upgrade
+    /// </summary>
+    public GameObject FireParticlesPrefab;
+    public GameObject EarthQuakeParticlesPrefab;
+    public GameObject TakeoverParticlesPrefab;
+    public GameObject UpgradeParticlesPrefab;
+
+    /// <summary>
+    /// Audio Source object
+    /// </summary>
+    public AudioSource Audio;
+
     void Start()
     {
         Mana = new int[] { 0, 0, 0, 0, 0 };
@@ -85,6 +98,16 @@ public class GameplayController : MonoBehaviour
         if (_uiController == null)
         {
             _uiController = GameObject.Find("GameplayUI").GetComponent<UIController>();
+        }
+
+        int IsMusicPlaying = PlayerPrefs.GetInt("IsMusicPlaying", 1);
+        if (IsMusicPlaying == 1)
+        {
+            Audio.mute = false;
+        }
+        else
+        {
+            Audio.mute = true;
         }
     }
 
@@ -234,6 +257,9 @@ public class GameplayController : MonoBehaviour
                     break;
             }
 
+            SelectedVertexA = null;
+            SetPositionOfSunshaft();
+
             SpellToCast = -1;
             GraphController.ClearSelection();
         }
@@ -258,6 +284,8 @@ public class GameplayController : MonoBehaviour
                 SelectedVertexB = null;
                 SetPositionOfSunshaft();
             }
+
+            Instantiate(UpgradeParticlesPrefab, vertex.transform.position, Quaternion.identity);
         }
     }
     
@@ -301,6 +329,8 @@ public class GameplayController : MonoBehaviour
         {
             vertex.ArmyPower = 1;
         }
+
+        Instantiate(FireParticlesPrefab, vertex.transform.position, Quaternion.identity);
     }
 
     /// <summary>
@@ -319,6 +349,8 @@ public class GameplayController : MonoBehaviour
                 {
                     tempVertex.ArmyPower = 1;
                 }
+
+                Instantiate(EarthQuakeParticlesPrefab, tempVertex.transform.position, Quaternion.identity);
             }
         }
     }
@@ -339,5 +371,6 @@ public class GameplayController : MonoBehaviour
         }
 
         vertex.Owner = whoCast;
+        Instantiate(TakeoverParticlesPrefab, vertex.transform.position, Quaternion.identity);
     }
 }

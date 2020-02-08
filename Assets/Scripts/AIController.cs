@@ -121,7 +121,7 @@ public class AIController : MonoBehaviour
 
         // Every 3 seconds, after 5 seconds of gameplay time move ai
         InvokeRepeating("MoveAI", 4.0f, 2.0f);
-        InvokeRepeating("CastSpellsAI", 5.0f, 3.0f);
+        InvokeRepeating("CastSpellsAI", 10.0f, 3.0f);
         InvokeRepeating("UpgradeAI", 5.0f, 3.0f);
     }
 
@@ -316,8 +316,7 @@ public class AIController : MonoBehaviour
             {
                 if (vertex.Type == VertexType.Apiary && _gameplayController.Honey[(int)vertex.Owner] >= vertex.Level * 25)
                 {
-                    vertex.Level++;
-                    _gameplayController.Honey[(int)vertex.Owner] -= vertex.Level * 25;
+                    _gameplayController.UpgradeVertex(vertex);
                 }
             }
         }
@@ -329,8 +328,7 @@ public class AIController : MonoBehaviour
             {
                 if (vertex.Type == VertexType.Village && _gameplayController.Honey[(int)vertex.Owner] >= vertex.Level * 25)
                 {
-                    vertex.Level++;
-                    _gameplayController.Honey[(int)vertex.Owner] -= vertex.Level * 25;
+                    _gameplayController.UpgradeVertex(vertex);
                 }
             }
         }
@@ -342,8 +340,7 @@ public class AIController : MonoBehaviour
             {
                 if (vertex.Type == VertexType.Shrine && _gameplayController.Honey[(int)vertex.Owner] >= vertex.Level * 25)
                 {
-                    vertex.Level++;
-                    _gameplayController.Honey[(int)vertex.Owner] -= vertex.Level * 25;
+                    _gameplayController.UpgradeVertex(vertex);
                 }
             }
         }
