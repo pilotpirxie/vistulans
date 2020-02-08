@@ -116,6 +116,7 @@ public class GameplayController : MonoBehaviour
         CastPlayerSpell();
         SetTimeScale();
         CheckForWinner();
+        AdminCommands();
     }
 
     /// <summary>
@@ -163,9 +164,38 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Move to main menu
+    /// </summary>
     void NavigateToMainMenu()
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+
+    /// <summary>
+    /// Debug commands
+    /// </summary>
+    void AdminCommands()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Honey[1] += 1000;
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            Mana[1] += 1000;
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Honey[2] += 1000;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Mana[2] += 1000;
+        }
     }
 
     /// <summary>
