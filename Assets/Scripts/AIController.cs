@@ -191,7 +191,7 @@ public class AIController : MonoBehaviour
                     }
 
                     // Function, which returns shortes path between this vertex and picked
-                    Func<int, IEnumerable<int>> shortestPath = ShortestPathFunction(_graph, vertex.Id);
+                    Func<int, IEnumerable<int>> shortestPath = ShortestPath(_graph, vertex.Id);
 
                     int indexOfVertexToTraverse = -1;
                     int armyPowerOfVertexToTraverse = int.MaxValue;
@@ -232,43 +232,66 @@ public class AIController : MonoBehaviour
         }
     }
 
-    private static Func<T, IEnumerable<T>> ShortestPathFunction<T>(Graph<T> graph, T start)
+    /// <summary>
+    /// Get shortest path from start
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="graph"></param>
+    /// <param name="start"></param>
+    /// <returns></returns>
+    private static Func<T, IEnumerable<T>> ShortestPath<T>(Graph<T> graph, T start)
     {
-        Dictionary<T, T> previous = new Dictionary<T, T>();
+        // Contains previous vertex neighbours
+        Dictionary<T, T> previousVertex = new Dictionary<T, T>();
 
         Queue<T> queue = new Queue<T>();
         queue.Enqueue(start);
 
+        // Perform until traverse all vertices (empty queue)
+        // and in every step add neighbours of current vertex
         while (queue.Count > 0)
         {
+            // Get first vertex in the queue to scan for neighbours
             var vertex = queue.Dequeue();
-            foreach (var neighbor in graph.AdjacencyList[vertex])
+
+            // For each connected neighbour in adjacency list
+            foreach (var neighbour in graph.AdjacencyList[vertex])
             {
-                if (previous.ContainsKey(neighbor))
+                if (previousVertex.ContainsKey(neighbour))
                 {
                     continue;
                 }
 
-                previous[neighbor] = vertex;
-                queue.Enqueue(neighbor);
+                previousVertex[neighbour] = vertex;
+
+                // Add every neighbour to que
+                queue.Enqueue(neighbour);
             }
         }
 
-        IEnumerable<T> ShortestPath(T v)
+        // Prepare path of jumps to selected vertex
+        IEnumerable<T> ShortestPath(T end)
         {
-            var path = new List<T>();
+            List<T> pathOfJumps = new List<T>();
 
-            var current = v;
-            while (!current.Equals(start))
+            // Set current to current
+            var currentVertex = end;
+
+            // Traverse backward until reach start vertex
+            while (!currentVertex.Equals(start))
             {
-                path.Add(current);
-                current = previous[current];
+                // Add current vertex to jump list
+                pathOfJumps.Add(currentVertex);
+                currentVertex = previousVertex[currentVertex];
             }
 
-            path.Add(start);
-            path.Reverse();
+            // Add jump at the end
+            pathOfJumps.Add(start);
 
-            return path;
+            // Reverse list to order from start to end
+            pathOfJumps.Reverse();
+
+            return pathOfJumps;
         }
 
         return ShortestPath;
