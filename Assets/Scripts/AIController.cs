@@ -120,7 +120,9 @@ public class AIController : MonoBehaviour
         _graph = new Graph<int>(_vertices, _edges);
 
         // Every 3 seconds, after 5 seconds of gameplay time move ai
-        InvokeRepeating("MoveAI", 5.0f, 3.0f);
+        InvokeRepeating("MoveAI", 4.0f, 2.0f);
+        InvokeRepeating("CastSpellsAI", 5.0f, 3.0f);
+        InvokeRepeating("UpgradeAI", 5.0f, 3.0f);
     }
 
     /// <summary>
@@ -233,13 +235,128 @@ public class AIController : MonoBehaviour
     }
 
     /// <summary>
+    /// Based of current increment of mana, cast spells
+    /// </summary>
+    void CastSpellsAI()
+    {
+        int[] totalManaIncrease = { 0, 0, 0, 0, 0 };
+
+        // Count mana increase per owner
+        foreach (VertexController vertex in _gameplayController.VertexList)
+        {
+            if (vertex.Type == VertexType.Shrine)
+            {
+                totalManaIncrease[(int)vertex.Owner] += vertex.Level;
+            }
+        }
+
+        foreach (VertexController vertex in _gameplayController.VertexList)
+        {
+            // For each enemy player
+            if (vertex.Owner != OwnerType.Player && vertex.Owner != OwnerType.Wild)
+            {
+                // Decide if cast spells
+                if (_gameplayController.Mana[(int)vertex.Owner] >= 100 && totalManaIncrease[(int)vertex.Owner] <= 2)
+                {
+                    foreach (VertexController tempVertex in _gameplayController.VertexList)
+                    {
+                        if (tempVertex.Owner != vertex.Owner && tempVertex.Owner != OwnerType.Wild)
+                        {
+                            _gameplayController.Mana[(int)vertex.Owner] -= 100;
+                            _gameplayController.CastOffensiveSpell(tempVertex);
+                            break;
+                        }
+                    }
+                }
+                else if (_gameplayController.Mana[(int)vertex.Owner] >= 300 && totalManaIncrease[(int)vertex.Owner] >= 3 && totalManaIncrease[(int)vertex.Owner] <= 4)
+                {
+                    foreach (VertexController tempVertex in _gameplayController.VertexList)
+                    {
+                        if (tempVertex.Owner != vertex.Owner && tempVertex.Owner != OwnerType.Wild)
+                        {
+                            _gameplayController.Mana[(int)vertex.Owner] -= 300;
+                            _gameplayController.CastEarthquakeSpell(tempVertex);
+                            break;
+                        }
+                    }
+                }
+                else if (_gameplayController.Mana[(int)vertex.Owner] >= 500 && totalManaIncrease[(int)vertex.Owner] >= 4)
+                {
+                    // Search for vertex with highest armypower to takeover
+                    int vertexIdWithHighestArmy = -1;
+                    int vertexArmyPower = int.MinValue;
+                    foreach (VertexController tempVertex in _gameplayController.VertexList)
+                    {
+                        if (tempVertex.Owner != vertex.Owner && tempVertex.Owner != OwnerType.Wild)
+                        {
+                            if (vertexArmyPower < tempVertex.ArmyPower)
+                            {
+                                vertexIdWithHighestArmy = tempVertex.Id;
+                            }
+                        }
+                    }
+
+                    if (vertexIdWithHighestArmy != -1)
+                    {
+                        _gameplayController.Mana[(int)vertex.Owner] -= 500;
+                        _gameplayController.CastTakeoverCast(GameObject.Find($"vertex{vertexIdWithHighestArmy}").GetComponent<VertexController>(), vertex.Owner);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    void UpgradeAI()
+    {
+        foreach (VertexController vertex in _gameplayController.VertexList)
+        {
+            // For each enemy player
+            if (vertex.Owner != OwnerType.Player && vertex.Owner != OwnerType.Wild)
+            {
+                if (vertex.Type == VertexType.Apiary && _gameplayController.Honey[(int)vertex.Owner] >= vertex.Level * 25)
+                {
+                    vertex.Level++;
+                    _gameplayController.Honey[(int)vertex.Owner] -= vertex.Level * 25;
+                }
+            }
+        }
+
+        foreach (VertexController vertex in _gameplayController.VertexList)
+        {
+            // For each enemy player
+            if (vertex.Owner != OwnerType.Player && vertex.Owner != OwnerType.Wild)
+            {
+                if (vertex.Type == VertexType.Village && _gameplayController.Honey[(int)vertex.Owner] >= vertex.Level * 25)
+                {
+                    vertex.Level++;
+                    _gameplayController.Honey[(int)vertex.Owner] -= vertex.Level * 25;
+                }
+            }
+        }
+
+        foreach (VertexController vertex in _gameplayController.VertexList)
+        {
+            // For each enemy player
+            if (vertex.Owner != OwnerType.Player && vertex.Owner != OwnerType.Wild)
+            {
+                if (vertex.Type == VertexType.Shrine && _gameplayController.Honey[(int)vertex.Owner] >= vertex.Level * 25)
+                {
+                    vertex.Level++;
+                    _gameplayController.Honey[(int)vertex.Owner] -= vertex.Level * 25;
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// Get shortest path from start
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="graph"></param>
     /// <param name="start"></param>
     /// <returns></returns>
-    private static Func<T, IEnumerable<T>> ShortestPath<T>(Graph<T> graph, T start)
+    static Func<T, IEnumerable<T>> ShortestPath<T>(Graph<T> graph, T start)
     {
         // Contains previous vertex neighbours
         Dictionary<T, T> previousVertex = new Dictionary<T, T>();

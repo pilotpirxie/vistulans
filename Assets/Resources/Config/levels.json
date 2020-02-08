@@ -9,7 +9,7 @@
           "type": 0,
           "x": -4,
           "y": -4,
-          "level": 1,
+          "level": 2,
           "owner": 1,
           "power": 45
         },
@@ -29,7 +29,7 @@
           "y": 3,
           "level": 3,
           "owner": 2,
-          "power": 40
+          "power": 15
         },
         {
           "id": 3,
