@@ -2,7 +2,14 @@
 
 public class Wave : MonoBehaviour
 {
+    /// <summary>
+    /// Max size of current object when waving
+    /// </summary>
     public Vector3 MaxSize = new Vector3(0.02f, 1f, 0.02f);
+
+    /// <summary>
+    /// Determine if should wave
+    /// </summary>
     public bool IsWaving = false;
 
     void FixedUpdate()

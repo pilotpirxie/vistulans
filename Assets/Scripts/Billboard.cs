@@ -2,6 +2,9 @@
 
 public class Billboard : MonoBehaviour
 {
+    /// <summary>
+    /// Billboard offset
+    /// </summary>
     public Vector3 Offset;
 
     void FixedUpdate()

@@ -5,10 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class SelectLevelController : MonoBehaviour
 {
+    /// <summary>
+    /// Prefab of button, used for changing current level
+    /// </summary>
     public GameObject LevelButtonPrefab;
 
+    /// <summary>
+    /// Panel behind buttons
+    /// </summary>
     public GameObject Panel;
 
+    /// <summary>
+    /// Temporary info about player progress
+    /// </summary>
     private int FinishedLevels = 0;
 
     void Start()
@@ -41,6 +50,10 @@ public class SelectLevelController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Change current level and go to battle scene
+    /// </summary>
+    /// <param name="levelIndex"></param>
     public void LoadLevel(int levelIndex)
     {
         PlayerPrefs.SetInt("LevelToPlayIndex", levelIndex);
@@ -48,6 +61,9 @@ public class SelectLevelController : MonoBehaviour
         SceneManager.LoadScene("BattleScene", LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// Close select level menu
+    /// </summary>
     public void OnCloseButton()
     {
         gameObject.SetActive(false);

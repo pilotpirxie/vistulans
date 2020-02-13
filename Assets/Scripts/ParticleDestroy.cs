@@ -9,6 +9,9 @@ public class ParticleDestroy : MonoBehaviour
         Invoke("Destroy", 3f);
     }
 
+    /// <summary>
+    /// Destroy this object
+    /// </summary>
     void Destroy()
     {
         GameObject.Destroy(gameObject);

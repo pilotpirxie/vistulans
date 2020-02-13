@@ -3,14 +3,29 @@ using TMPro;
 
 public class MainMenuController : MonoBehaviour
 {
+    /// <summary>
+    /// Determine if music is currently playing
+    /// </summary>
     public int IsMusicPlaying = 1;
 
+    /// <summary>
+    /// Reference to text at music button
+    /// </summary>
     public TextMeshProUGUI MusicButtonText;
 
+    /// <summary>
+    /// Reference to tutorial object at canvas
+    /// </summary>
     public GameObject Tutorial;
 
+    /// <summary>
+    /// Reference to selectable level at canvas
+    /// </summary>
     public GameObject SelectLevel;
 
+    /// <summary>
+    /// Reference to audio object
+    /// </summary>
     public AudioSource Audio;
 
     void Start()
